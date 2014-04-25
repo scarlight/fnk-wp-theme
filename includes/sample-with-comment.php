@@ -1,0 +1,6 @@
+<?php
+/**
+ * Adds content structures.
+ *
+ */
+?>
