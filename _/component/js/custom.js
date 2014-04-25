@@ -17,9 +17,19 @@ cs(document).ready(function(){
         extraWidth      : 1
     });
 
-    cs(window).load(function(){
+    cs('.recent-news').pajinate({
+        items_per_page : 2,
+        item_container_id : '.blog-item',
+        nav_panel_id : '.page-navigation',
+        nav_info_id: '.result-info',
+        num_page_links_to_display: 2,
+        nav_label_first : '&lt;&lt;',
+        nav_label_prev : '&lt;',
+        nav_label_next : '&gt;',
+        nav_label_last : '&gt;&gt;',
+    });
 
-        // code goes here when window has finish loading
+    cs(window).load(function(){
 
     });
 

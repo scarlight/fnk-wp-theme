@@ -31,11 +31,11 @@
 
 ?>
 
-<?php echo do_shortcode( '[fnk-title line="'.$fnk_short_line.'" english="'.$category_name.'"]'.$fnk_additional_language.'[/fnk-title]' ); ?>
 <div class="recent-news">
+<?php echo do_shortcode( '[fnk-title line="'.$fnk_short_line.'" english="'.$category_name.'"]'.$fnk_additional_language.'[/fnk-title]' ); ?>
+    <div class="blog-item">
 <?php if ($wp_query->have_posts()) : ?>
     <?php while ($wp_query->have_posts()) : $wp_query->the_post(); ?>
-
             <div class="blog-layout">
 
                 <a href="<?php echo the_permalink(); ?>" class="" title="<?php the_title_attribute(); ?>">
@@ -49,7 +49,7 @@
                 </a>
 
                 <h3 style="margin-top:0;"><?php the_title(); ?></h3>
-                <span>Posted on</span> <?php the_time('F jS, Y'); ?> <span>by</span> <?php the_author(); ?>
+                <span style="position:relative; display:inline-block;margin-top:-10px;">Posted on <?php the_time('F jS, Y'); ?> by <?php the_author(); ?></span>
 
                 <?php //echo get_post_meta($post->ID, 'PostThumb', true); ?>
 
@@ -67,11 +67,14 @@
             </div>
 
     <?php endwhile; ?>
+    </div>
+    <?php else : ?>
+        <h2>Sorry, what you looking for cannot be found. :(</h2>
+    <?php endif; ?>
+        <div class="floatr page-navigation pagination-a"></div>
+        <div class="floatr result-info"></div>
+    <div class="clear"></div>
 </div>
-<?php else : ?>
-    <h2>Sorry, what you looking for cannot be found. :(</h2>
-<?php endif; ?>
-
 <?php
 
     wp_reset_postdata();

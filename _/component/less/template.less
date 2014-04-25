@@ -146,6 +146,45 @@ h3.title-short
 
 }
 
+// for recent news pagination
+div.page-navigation
+{
+    #wrap > .void();
+    a
+    {
+        #transition > .all(@duration:0.2s, @ease:ease-out);
+    }
+
+    // dont want the first anchor to border radius instead apply on the result info box
+    > a:first-child,
+    > span:first-child {
+        .border-left-radius(0);
+        .border-right-radius(0);
+    }
+
+    a.active_page
+    {
+        color: white;
+        background:#338f7d;
+        border:solid 1px #338f7d;
+        &:hover{
+            background: darken(#338f7d, 5%);
+            border:solid 1px #dddddd;
+            border-right:solid 1px transparent;
+        }
+    }
+}
+
+// for recent news pagination
+div.result-info
+{
+    padding:6px 12px;
+    line-height:1.85;
+    border: 1px solid #dddddd;
+    border-right:none;
+    .border-left-radius(4px);
+}
+
 .blog-layout
 {
     position:relative;
@@ -154,6 +193,7 @@ h3.title-short
     height:auto;
     padding:30px 0 0 30px;
     margin-bottom:34px;
+    word-wrap: break-word;
     .clearfix();
     img
     {

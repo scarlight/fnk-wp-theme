@@ -82,7 +82,6 @@ function fnk_load_css_files() /* Load CSS Files */
     wp_register_style( 'fnk_font_awesome', FNK_THEMEROOT.'/css/font-awesome.css', array(), '4.0.3', 'screen' );
     wp_register_style( 'fnk_css_bootstrap', FNK_THEMEROOT.'/css/bootstrap.css', array(), '1.0', 'screen' );
     wp_register_style( 'fnk_css_theme', FNK_THEMEROOT.'/css/theme.css', array('fnk_css_bootstrap'), '1.0', 'screen' );
-    wp_register_style( 'fnk_css_simplepagination', FNK_THEMEROOT.'/css/simplePagination.css', array(), '1.0', 'screen' );
     wp_register_style( 'fnk_css_template', FNK_THEMEROOT.'/css/template.css', array('fnk_css_bootstrap'), '1.0', 'screen' );
 
     wp_register_style( 'fnk_sample_for_ie', FNK_THEMEROOT.'/css/sample_for_ie.css', array('fnk_sample_dependent'), '1.0', 'screen' ); /* modify / remove this sample if no need*/
@@ -91,7 +90,6 @@ function fnk_load_css_files() /* Load CSS Files */
     wp_enqueue_style( 'fnk_font_awesome');
     wp_enqueue_style( 'fnk_css_bootstrap');
     wp_enqueue_style( 'fnk_css_theme');
-    wp_enqueue_style( 'fnk_css_simplepagination');
     wp_enqueue_style( 'fnk_css_template');
 
     if ( $is_IE ) { /* maybe removed soon since I have better IE detection via language_attribute filter */
@@ -110,7 +108,7 @@ function fnk_load_js_files() /* Load JS Files */
     // wp_register_script('fnk_js_validate', FNK_THEMEROOT.'/js/jquery.validate.js', array(), '1.11.1', false );
     wp_register_script('fnk_js_caroufredsel', FNK_THEMEROOT.'/js/jquery.carouFredSel.js', array('jquery'), '6.1.0', false );
     wp_register_script('fnk_js_tweenmax', FNK_THEMEROOT.'/js/TweenMax.min.js', array('jquery'), '1.10.3', false );
-    wp_register_script('fnk_js_simplepagination', FNK_THEMEROOT.'/js/jquery.simplePagination.js', array('jquery'), '1.6', false );
+    wp_register_script('fnk_js_pajinator', FNK_THEMEROOT.'/js/jquery.pajinate.js', array('jquery'), '0.4', false );
     // hoverIntent.js is included by default by wordpress
     wp_register_script('fnk_js_supersubs', FNK_THEMEROOT.'/js/supersubs.js', array('jquery'), 'v0.3b', false );
     wp_register_script('fnk_js_superfish', FNK_THEMEROOT.'/js/superfish.min.js', array('jquery'), 'v1.7.4', false );
@@ -121,7 +119,7 @@ function fnk_load_js_files() /* Load JS Files */
     // wp_enqueue_script('fnk_js_validate');
     wp_enqueue_script('fnk_js_caroufredsel');
     wp_enqueue_script('fnk_js_tweenmax');
-    wp_enqueue_script('fnk_js_simplepagination');
+    wp_enqueue_script('fnk_js_pajinator');
     // hoverIntent.js is included by default by wordpress
     wp_enqueue_script('fnk_js_supersubs');
     wp_enqueue_script('fnk_js_superfish');

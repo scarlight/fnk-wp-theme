@@ -233,6 +233,41 @@ h3.title-short {
 .welcome-page {
   margin-bottom: 68px;
 }
+div.page-navigation {
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+div.page-navigation a {
+  -webkit-transition: all 0.2s ease-out;
+  -moz-transition: all 0.2s ease-out;
+  transition: all 0.2s ease-out;
+}
+div.page-navigation > a:first-child,
+div.page-navigation > span:first-child {
+  border-bottom-left-radius: 0;
+  border-top-left-radius: 0;
+  border-bottom-right-radius: 0;
+  border-top-right-radius: 0;
+}
+div.page-navigation a.active_page {
+  color: white;
+  background: #338f7d;
+  border: solid 1px #338f7d;
+}
+div.page-navigation a.active_page:hover {
+  background: #2c7c6d;
+  border: solid 1px #dddddd;
+  border-right: solid 1px transparent;
+}
+div.result-info {
+  padding: 6px 12px;
+  line-height: 1.85;
+  border: 1px solid #dddddd;
+  border-right: none;
+  border-bottom-left-radius: 4px;
+  border-top-left-radius: 4px;
+}
 .blog-layout {
   position: relative;
   display: block;
@@ -240,6 +275,7 @@ h3.title-short {
   height: auto;
   padding: 30px 0 0 30px;
   margin-bottom: 34px;
+  word-wrap: break-word;
 }
 .blog-layout:before,
 .blog-layout:after {

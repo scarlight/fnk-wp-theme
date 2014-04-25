@@ -22,7 +22,7 @@
 
     <?php do_action('fnk_right_container_start') ?>
 
-    <?php get_sidebar(); ?>
+    <?php //get_sidebar(); ?>
 
     <?php do_action('fnk_right_container_start') ?>
 
