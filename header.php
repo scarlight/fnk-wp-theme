@@ -69,31 +69,38 @@
                             <h1><?php bloginfo('name'); ?><a title="<?php bloginfo('name'); ?>" rel="home" href="<?php echo home_url(); ?>"><span><img class="tag-logo" src="<?php echo FNK_IMAGES; ?>/tag-logo.png" width="433" height="56" alt=""></span></a>
                             </h1>
                         </div>
-                        <div class="facebook-link floatr">
-                            <a href="#"><img src="<?php echo FNK_IMAGES; ?>/like_us_on_facebook.jpg" width="132" height="51" alt=""></a>
+                        <div class="top-corner floatr">
+                            <?php if ( is_active_sidebar( 'top_corner_sidebar' ) ) { ?>
+                                <?php dynamic_sidebar( 'top_corner_sidebar' ); ?>
+                            <?php } ?>
                         </div>
                         <div id="fnk-nav-wrp">
                             <nav>
                                 <?php
-                                    $defaults = array(
-                                        'theme_location'  => 'main-menu',
-                                        'menu'            => '',
-                                        'container'       => '',
-                                        'container_class' => '',
-                                        'container_id'    => '',
-                                        'menu_class'      => 'fnk-mainmenu sf-menu',
-                                        'menu_id'         => '',
-                                        'echo'            => true,
-                                        'fallback_cb'     => 'wp_page_menu',
-                                        'before'          => '',
-                                        'after'           => '',
-                                        'link_before'     => '',
-                                        'link_after'      => '',
-                                        'items_wrap'      => '<ul id="%1$s" class="%2$s">%3$s</ul>',
-                                        'depth'           => 0,
-                                        'walker'          => new fnk_description_walker()
-                                    );
-                                    wp_nav_menu( $defaults );
+                                    if ( has_nav_menu( 'main-menu' ) ) {
+                                        $defaults = array(
+                                            'theme_location'  => 'main-menu',
+                                            'menu'            => '',
+                                            'container'       => '',
+                                            'container_class' => '',
+                                            'container_id'    => '',
+                                            'menu_class'      => 'fnk-mainmenu sf-menu',
+                                            'menu_id'         => '',
+                                            'echo'            => true,
+                                            'fallback_cb'     => 'wp_page_menu',
+                                            'before'          => '',
+                                            'after'           => '',
+                                            'link_before'     => '',
+                                            'link_after'      => '',
+                                            'items_wrap'      => '<ul id="%1$s" class="%2$s">%3$s</ul>',
+                                            'depth'           => 0,
+                                            'walker'          => new fnk_description_walker()
+                                        );
+                                        wp_nav_menu( $defaults );
+                                    }
+                                    else{
+                                        echo '<h4 style="position:relative;display:block;margin:0;" class="alert alert-warning">No Menu Assigned</h4>';
+                                    }
                                 ?>
                             </nav>
                         </div>

@@ -55,8 +55,15 @@ function fnk_theme_setup_init()
 
     add_theme_support( 'post-thumbnails' );
     add_image_size( 'featured-recent-news', 304, 194, true );
+    add_image_size( 'sidebar_thumb', 220 );
+    add_image_size( 'sidebar_tiny_thumb', 42, 42, true );
 
     require_once("includes/template-tags.php");
+    require_once("includes/widget/fnk_facebook_link.php");
+    require_once("includes/widget/fnk_donate_widget.php");
+    require_once("includes/widget/fnk_latest_cause.php");
+    require_once("includes/widget/fnk_recent_post_by_category.php");
+    require_once("includes/widget/fnk_sidebar_menu.php");
     require_once("includes/shortcode/shortcode.php");
     require_once("includes/custom-metabox/functions.php");
     require_once("includes/taxonomy-metabox/functions.php");
@@ -162,14 +169,25 @@ function fnk_widgets_init() /* Register our sidebars and widgetized areas. */
     if(function_exists("register_sidebar"))
     {
         register_sidebar( array(
-            'name'          => __( 'Right Sidebar' ),
-            //'id'            => 'right_sidebar',
+            'name'          => __( 'Right Sidebar', 'fnk' ),
+            'id'            => 'right_sidebar',
             'description'   => 'Widgets in this area will be shown on the right-hand side.',
             'class'         => '',
-            'before_widget' => '<li id="%1$s" class="widget %2$s">',
-            'after_widget'  => '</li>',
-            'before_title'  => '<h2 class="widgettitle">',
-            'after_title'   => '</h2>'
+            'before_widget' => '<div id="%1$s" class="widget %2$s">',
+            'after_widget'  => '<div class="clear"></div></div><br><br>',
+            'before_title'  => '<h3>',
+            'after_title'   => '</h3>'
+        ));
+
+        register_sidebar( array(
+            'name'          => __( 'Top Corner Sidebar', 'fnk' ),
+            'id'            => 'top_corner_sidebar',
+            'description'   => 'Widgets in this area will be shown on the top right corner. Available size is [132px x 51px] only.',
+            'class'         => '',
+            'before_widget' => '<div id="%1$s" class="widget %2$s">',
+            'after_widget'  => '</div>',
+            'before_title'  => '<h3>',
+            'after_title'   => '</h3>'
         ));
     }
 }

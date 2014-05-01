@@ -40,8 +40,8 @@ $config = array(
     //text field
     $my_meta->addText($prefix.'tax_text_field_id',
         array(
-            'name'=> __('Additional Translation ','tax-meta'),
-            'desc'=> __('<span class="description">Add a chinese equivalent translation of the this category.</span>','tax-meta')
+            'name'=> __('Additional Translation ','fnk'),
+            'desc'=> __('<span class="description">Add a chinese equivalent translation of the this category.</span>','fnk')
         )
     );
 
@@ -52,8 +52,8 @@ $config = array(
             'no'=>'No'
         ),
         array(
-            'name'=> __('Short Line','tax-meta'),
-            'desc'=> __('<span class="description">Should the title have a long or short line css decoration.</span>','tax-meta'),
+            'name'=> __('Short Line','fnk'),
+            'desc'=> __('<span class="description">Should the title have a long or short line css decoration.</span>','fnk'),
             'style'=>__('width:auto; margin-left:10px;'),
             'std'=> array('no')
         )

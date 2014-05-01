@@ -1,34 +1,6 @@
 <?php echo __FILE__; ?>
 <?php
 
-    // $cat_args = array(
-    //     'type'                     => 'post',
-    //     'child_of'                 => 0,
-    //     'parent'                   => '',
-    //     'orderby'                  => 'name',
-    //     'order'                    => 'ASC',
-    //     'hide_empty'               => 1,
-    //     'hierarchical'             => 1,
-    //     'exclude'                  => '',
-    //     'include'                  => '',
-    //     'number'                   => '',
-    //     'taxonomy'                 => 'category',
-    //     'pad_counts'               => false
-
-    // );
-    // $all_category = get_categories( $cat_args );
-
-    // $cat_array = array();
-    // foreach ($all_category as $key => $category) {
-    //     $cat_array[$key] = $category->cat_ID;
-    // }
-
-    // $all_category = implode(", ", $cat_array);
-
-    // not using right now
-    // need to use get_categories() to find all categories of a post, WP_Query does not provide option to get all categories since it uses array option to insert the category id we are looking for. However a post may appear in more than one category, so think about what exactly you need. Do you still need all the category?
-    /*------------------------------------------------------------------------*/
-
     $cs_paged = (get_query_var('paged')) ? get_query_var('paged') : 1;
     $cs_args = array(
         'post_type' => 'post',

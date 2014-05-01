@@ -54,7 +54,7 @@ h3.title, h3.title-short
 {
     #wrap > .vrelative();
     color:#5a5a5a;
-    margin-bottom:16px;
+    margin-bottom:18px;
     line-height:1.0;
     .zh
     {
@@ -67,7 +67,7 @@ h3.title, h3.title-short
         width:100%;
         height:1px;
         border-bottom:solid 1px #d3d2d2;
-        margin-top:16px;
+        margin-top:15px;
         .cube
         {
             #wrap > .vrelative();
@@ -146,6 +146,20 @@ h3.title-short
 
 }
 
+.sidebar-view-all
+{
+    color:#a2a2ad;
+    text-decoration:none;
+    padding:1px 7px;
+    margin-top:-10px;
+    margin-bottom:10px;
+    border:solid 1px #a2a2ad;
+    #transition > .all(@duration:0.2s, @ease:ease-out);
+    &:hover{
+        border:solid 1px #338f7d;
+    }
+}
+
 // for recent news pagination
 div.page-navigation
 {
@@ -189,7 +203,7 @@ div.result-info
 {
     position:relative;
     display:block;
-    width:690px;
+    width:100%;
     height:auto;
     padding:30px 0 0 30px;
     margin-bottom:34px;
@@ -253,6 +267,7 @@ ul.checkmark
     #wrap > .vrelative(inline-block);
     list-style-type:none;
     list-style-position:outside;
+    width:100%;
     li
     {
         #wrap > .vrelative(inline-block);
@@ -267,8 +282,9 @@ ul.checkmark
             font-size:27px;
             color:#979797;
             width:30px;
-            height:30px;
-            line-height:2;
+            height:auto;
+            vertical-align: middle;
+            line-height: 1.7;
             margin-left:-30px;
             #transition > .all(@duration:0.2s, @ease:ease-out);
         }
@@ -282,10 +298,12 @@ ul.checkmark
         span
         {
             #wrap > .vrelative();
+            width:100%;
         }
         a
         {
             color:#979797;
+            width:100%;
             &:hover
             {
                 color:#4fc0aa;
@@ -310,7 +328,33 @@ ul.recent-post
         {
             margin-top:5px;
             margin-right:10px;
+            #border > .rounded(0);
         }
+        span.no-tiny-thumb
+        {
+            &:before
+            {
+                display:inline-block;
+                content: "\f03e";
+                font-family: FontAwesome;
+                font-size:39px;
+                line-height:1.15;
+                color:#ececec;
+                width:42px;
+                height:42px;
+                margin-top:5px;
+                margin-right:10px;
+                float:left;
+            }
+        }
+    }
+}
+
+div.latest-cause
+{
+    img
+    {
+        #border > .rounded(12px);
     }
 }
 
@@ -480,9 +524,12 @@ html, body { height:100%; }
 //**********************************************************************************************//
 // START FACEBOOK LINK.
 //**********************************************************************************************//
-.facebook-link
+.top-corner
 {
     #wrap > .void();
+    width:132px;
+    height:51px;
+    min-height:51px;
     margin-top:17px;
     margin-right:31px;
 }

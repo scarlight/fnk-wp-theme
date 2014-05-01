@@ -3,7 +3,7 @@
     $cs_paged = (get_query_var('paged')) ? get_query_var('paged') : 1;
     $cs_args = array(
         'post_type' => 'post',
-        'posts_per_page' => -1,
+        'posts_per_page' => 20, // retrieve latest 20 enough dont need -1
         'post_status' => 'publish', //important
         'paged' => $cs_paged,
         'order' => 'DESC',
@@ -11,7 +11,7 @@
         'category_name' => 'recent-news',
         'ignore_sticky_posts' => true,
         'offset' => 0
-    ); // use category slug to find posts. Also using posts_per_page=-1 cause simplepagination.js will do the real pagination.
+    ); // use category slug to find posts. Also using posts_per_page=-1 cause pajination.js will do the real pagination.
 
     $cs_query = new WP_Query($cs_args);
 
@@ -71,8 +71,9 @@
     <?php else : ?>
         <h2>Sorry, what you looking for cannot be found. :(</h2>
     <?php endif; ?>
-        <div class="floatr page-navigation pagination-a"></div>
-        <div class="floatr result-info"></div>
+        <br>
+        <div class="floatl result-info" style="margin-left:120px;"></div>
+        <div class="floatl page-navigation pagination-a"></div>
     <div class="clear"></div>
 </div>
 <?php
