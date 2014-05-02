@@ -459,32 +459,26 @@ div.latest-cause img {
   -webkit-background-clip: padding-box;
   background-clip: padding-box;
 }
-#donators-table,
-#donation-table {
+.donation-table {
   width: 100%;
   height: auto;
+  text-align: center;
   background-color: #e7e4dd;
 }
-#donators-table th,
-#donation-table th {
+.donation-table th {
+  font-size: 13px;
   text-align: center;
   vertical-align: middle;
-  padding: 5px;
+  padding: 8px 5px;
   border: solid 1px #bebebe;
   background-color: #cdc8bc;
 }
-#donators-table td,
-#donation-table td {
+.donation-table td {
+  font-size: 13px;
   text-align: center;
   vertical-align: middle;
   padding: 3px 6px;
   border: solid 1px #bebebe;
-}
-#donation-table td.no {
-  text-align: center;
-}
-#donation-table td {
-  text-align: left;
 }
 html,
 body {

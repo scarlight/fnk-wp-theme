@@ -46,7 +46,6 @@ function fnk_theme_setup_init()
     add_action('fnk_loop_recent_news', "add_fnk_loop_recent_news", 10, 1);
 
     add_filter('language_attributes','fnk_language_attributes');                                    /* better ie10 or less browser detection via language_attributes filter; http://simplemediacode.info/snippets/better-brower-detection-with-language_attributes-filter-in-wordpress/ */
-    add_filter('the_content', 'fnk_shortcode_empty_paragraph_fix');                                 /* Fixes shortcode using wpautop that inserts additional p and br tag. */ /*Please replace with your theme shortcode in the param */
     add_filter('body_class','fnk_homepage_add_class');                                              /* Add "homepage" class to body when viewing home page. */
     add_filter('admin_footer_text', 'fnk_footer_admin');                                            /* Customise the footer in admin area */
     add_filter('show_admin_bar', '__return_false' );                                                /* Remove the admin bar from the front end */
@@ -210,20 +209,6 @@ function fnk_language_attributes($content) /* better ie10 or less browser detect
     else {
         return $content;
     }
-}
-
-function fnk_shortcode_empty_paragraph_fix($content) /* Fixes shortcode using wpautop that inserts additional p and br tag. */
-{
-    // array of custom shortcodes requiring the fix
-    $block = join("|",array("col", "shortcode1", "shortcode2", "shortcode3"));
-
-    // opening tag
-    $rep = preg_replace("/(<p>)?\[($block)(\s[^\]]+)?\](<\/p>|<br \/>)?/","[$2$3]",$content);
-
-    // closing tag
-    $rep = preg_replace("/(<p>)?\[\/($block)](<\/p>|<br \/>)?/","[/$2]",$rep);
-
-    return $rep;
 }
 
 function fnk_homepage_add_class() /* Add "homepage" class to body when viewing home page. */

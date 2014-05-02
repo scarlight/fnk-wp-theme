@@ -111,7 +111,7 @@ class fnk_latest_cause extends WP_Widget {
 
     // Check if title is set
     if ( $cn_title || $en_title) {
-        echo do_shortcode( '[fnk-title english="'.$en_title.'"]'.$cn_title.'[/fnk-title]' );
+        echo do_shortcode( '[fnk_title english="'.$en_title.'"]'.$cn_title.'[/fnk_title]' );
 ?>
 
 <div class="latest-cause">

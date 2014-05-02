@@ -32,7 +32,7 @@
 ?>
 
 <div class="recent-news">
-<?php echo do_shortcode( '[fnk-title line="'.$fnk_short_line.'" english="'.$category_name.'"]'.$fnk_additional_language.'[/fnk-title]' ); ?>
+<?php echo do_shortcode( '[fnk_title line="'.$fnk_short_line.'" english="'.$category_name.'"]'.$fnk_additional_language.'[/fnk_title]' ); ?>
     <div class="blog-item">
 <?php if ($wp_query->have_posts()) : ?>
     <?php while ($wp_query->have_posts()) : $wp_query->the_post(); ?>

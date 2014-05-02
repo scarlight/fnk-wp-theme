@@ -29,6 +29,13 @@ cs(document).ready(function(){
         nav_label_last : '&gt;&gt;',
     });
 
+    if( cs("td.donation-table-counter").length > 0 )
+    {
+        cs("td.donation-table-counter").each(function(i,elem){
+            cs(this).text(i+1);
+        });
+    }
+
     cs(window).load(function(){
 
     });
