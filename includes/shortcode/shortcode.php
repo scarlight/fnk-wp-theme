@@ -3,10 +3,11 @@
 *
 * Add tittle with line decoration
 *
+* [fnk_title line="short" english="Welcome to Our Website"]欢迎来到我们的网站[/fnk_title]
+* [fnk_title line="short"]欢迎来到我们的网站[/fnk_title]
+* [fnk_title]欢迎来到我们的网站[/fnk_title]
+*
 */
-// [fnk_title line="short" english="Welcome to Our Website"]欢迎来到我们的网站[/fnk_title]
-// [fnk_title line="short"]欢迎来到我们的网站[/fnk_title]
-// [fnk_title]欢迎来到我们的网站[/fnk_title]
 function fnk_title_shortcode($atts, $content){
     $atts = shortcode_atts(
         array(
@@ -29,13 +30,14 @@ add_shortcode('fnk_title', 'fnk_title_shortcode');
 *
 * Create donation table
 *
+* [fnk_donation_table]
+* [fnk_donation_row date="24/05/2014" name="some_name" amount="RM 10,000.00" type="cash"]
+* [fnk_donation_row date="24/05/2014" name="some_name" amount="RM 10,000.00" type="cash"]
+* [fnk_donation_row date="24/05/2014" name="some_name" amount="RM 10,000.00" type="cash"]
+* [fnk_donation_row date="24/05/2014" name="some_name" amount="RM 10,000.00" type="cash"]
+* [/fnk_donation_table]
+*
 */
-// [fnk_donation_table]
-// [fnk_donation_row date="24/05/2014" name="some_name" amount="RM 10,000.00" type="cash"]
-// [fnk_donation_row date="24/05/2014" name="some_name" amount="RM 10,000.00" type="cash"]
-// [fnk_donation_row date="24/05/2014" name="some_name" amount="RM 10,000.00" type="cash"]
-// [fnk_donation_row date="24/05/2014" name="some_name" amount="RM 10,000.00" type="cash"]
-// [/fnk_donation_table]
 function fnk_donation_table_shortcode($atts, $content){
     $atts = shortcode_atts(
         array(
@@ -68,6 +70,8 @@ add_shortcode('fnk_donation_table', 'fnk_donation_table_shortcode');
 *
 * Create donation table - row part
 *
+* [fnk_donation_row date="24/05/2014" name="some_name" amount="RM 10,000.00" type="cash"]
+*
 */
 function fnk_donation_row_shortcode($atts, $content){
     $atts = shortcode_atts(
@@ -96,13 +100,106 @@ add_shortcode('fnk_donation_row', 'fnk_donation_row_shortcode');
 
 /*
 *
+* Content column to the left
+*
+* [fnk_left_box] content [/fnk_left_box]
+*
+*/
+function fnk_left_box_shortcode($atts, $content){
+    $atts = shortcode_atts(
+        array(
+            'content' => !empty($content) ? $content : NULL
+        ), $atts
+    );
+
+    extract($atts);
+
+    if(!empty($content)){
+        return '<div class="left-box-image">'.do_shortcode($content).'</div>';
+    }
+
+    return "";
+}
+add_shortcode('fnk_left_box', 'fnk_left_box_shortcode');
+
+/*
+*
+* Content column to the right
+*
+* [fnk_right_box] content [/fnk_right_box]
+*
+*/
+function fnk_right_box_shortcode($atts, $content){
+    $atts = shortcode_atts(
+        array(
+            'content' => !empty($content) ? $content : NULL
+        ), $atts
+    );
+
+    extract($atts);
+
+    if(!empty($content)){
+        return '<div class="right-box-image">'.do_shortcode($content).'</div>';
+    }
+
+    return "";
+}
+add_shortcode('fnk_right_box', 'fnk_right_box_shortcode');
+
+/*
+*
+* Rounded image 304 x 194
+*
+* [fnk_round_corner_image id="999"]
+*
+*/
+function fnk_round_corner_image_shortcode($atts, $content){
+    $atts = shortcode_atts(
+        array(
+            'id' => "",
+            'content' => !empty($content) ? $content : NULL
+        ), $atts
+    );
+
+    extract($atts);
+
+    if( !empty($id) && is_int($id) )
+    {
+        $image_tag = '<img class="round-corner-image" style="width:304px; height:194px; border:solid 1px #e7e4dd; ';
+        $image_tag.= 'background: #FFFFFF url('.FNK_IMAGES.'/fnk-logo-no-photo.jpg) no-repeat center center scroll;" ';
+        $image_tag.= 'src="'.FNK_IMAGES.'/space.gif" alt="">';
+
+        $image = wp_get_attachment_image_src( $id, 'featured-recent-news'); // use back "featured recent news" image size
+
+        if( $image ) {
+            // change above tag to this
+            $image_tag = '<img class="round-corner-image" width="'.$image_url[1].'" ';
+            $image_tag.= 'height="'.$image_url[2].'" ';
+            $image_tag.= 'src="'.$image_url[0].'" alt="">';
+
+            return $image_tag;
+        }
+        else {
+            // just return the initial declared image tag
+            return $image_tag;
+        }
+    }
+    else {
+        // just return the initial declared image tag
+        return $image_tag;
+    }
+}
+add_shortcode('fnk_round_corner_image', 'fnk_round_corner_image_shortcode');
+
+/*
+*
 * Fix paragraph and break issue
 *
 */
 function fnk_shortcode_empty_paragraph_fix($content) /* Fixes shortcode using wpautop that inserts additional p and br tag. */
 {
     // array of custom shortcodes requiring the fix
-    $block = join("|",array('fnk_title','fnk_donation_table','fnk_donation_row'));
+    $block = join("|",array('fnk_title','fnk_donation_table','fnk_donation_row','fnk_left_box','fnk_right_box', 'fnk_corner_image'));
 
     // opening tag
     $rep = preg_replace("/(<p>)?\[($block)(\s[^\]]+)?\](<\/p>|<br \/>)?/","[$2$3]",$content);

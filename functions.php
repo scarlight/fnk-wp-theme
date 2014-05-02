@@ -24,6 +24,7 @@ function fnk_theme_setup_init()
     //**********************************************************************************************//
     // START DEFINE CONSTANTS.
     //**********************************************************************************************//
+    // define ('WPCF7_AUTOP', false ); in wp-config
     define('FNK_THEMEROOT', get_template_directory_uri());
     define('FNK_IMAGES', FNK_THEMEROOT.'/images');
     //define('WOOCOMMERCE_USE_CSS', false); for disabling woocommerce default css

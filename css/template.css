@@ -78,6 +78,16 @@ h6 {
   font-size: 11px;
   color: #4fc0aa;
 }
+.required {
+  color: #ff0000;
+}
+hr.stiched {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  height: 11px;
+  background: transparent url(../images/hr-stiched.png) repeat-x 0px center scroll;
+}
 ul.post-categories {
   position: relative;
   display: inline-block;
@@ -349,6 +359,14 @@ div.result-info {
   padding-left: 34px;
   width: 386px;
 }
+.round-corner-image {
+  -webkit-border-radius: 12px;
+  -moz-border-radius: 12px;
+  border-radius: 12px;
+  -moz-background-clip: padding;
+  -webkit-background-clip: padding-box;
+  background-clip: padding-box;
+}
 ul.checkmark {
   position: relative;
   display: inline-block;
@@ -479,6 +497,68 @@ div.latest-cause img {
   vertical-align: middle;
   padding: 3px 6px;
   border: solid 1px #bebebe;
+}
+.fnk-contact .aligntop {
+  vertical-align: top;
+}
+.fnk-contact .control-label {
+  font-weight: 400;
+  width: 110px;
+}
+.fnk-contact .form-control {
+  position: relative;
+  display: inline-block;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  width: 400px;
+  height: auto;
+  font-style: italic;
+  padding: 5px 12px;
+  color: #282828;
+  border: 1px solid #d8d8d8;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+  -moz-background-clip: padding;
+  -webkit-background-clip: padding-box;
+  background-clip: padding-box;
+}
+.fnk-contact .form-control:focus {
+  -webkit-box-shadow: 0 0 8px rgba(205, 200, 188, 0.8);
+  -moz-box-shadow: 0 0 8px rgba(205, 200, 188, 0.8);
+  box-shadow: 0 0 8px rgba(205, 200, 188, 0.8);
+}
+.fnk-contact .textarea {
+  height: auto;
+  padding: 7px 10px 10px;
+}
+.fnk-contact .form-group {
+  margin-bottom: 5px;
+}
+.fnk-contact .form-group .btn {
+  font-size: 13px;
+  margin-left: 20px;
+  padding: 2px 15px;
+}
+.fnk-contact .ajax-loader {
+  margin-top: 10px;
+}
+.fnk-contact div.wpcf7-validation-errors {
+  color: #282828;
+  border: none;
+  background: #f7e700;
+  -webkit-box-shadow: 0 0 10px #b7b09f;
+  -moz-box-shadow: 0 0 10px #b7b09f;
+  box-shadow: 0 0 10px #b7b09f;
+}
+.fnk-contact div.wpcf7-mail-sent-ok {
+  color: white;
+  border: none;
+  background: #4fc0aa;
+  -webkit-box-shadow: 0 0 5px #3aa28e;
+  -moz-box-shadow: 0 0 5px #3aa28e;
+  box-shadow: 0 0 5px #3aa28e;
 }
 html,
 body {
