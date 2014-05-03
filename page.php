@@ -1,22 +1,15 @@
 <?php
 /**
- * Base : index.php template file
+ * Custom page.php template file
  *
- * Base file used when absents of custom template
+ * Default template for page
  * WordPress site.
  *
  */
 ?>
 <?php //echo __FILE__ ?>
+
 <?php get_header(); ?>
-
-<?php
-
-    echo "<pre>";
-        print_r($wp_query);
-    echo "</pre>";
-
-?>
 
 <?php do_action('fnk_body_upper_side'); ?>
 
@@ -24,9 +17,7 @@
 
         <?php do_action('fnk_left_container_start') ?>
 
-            <?php do_action('fnk_welcome'); ?>
-
-            <?php do_action('fnk_loop_recent_news'); ?>
+            <?php do_action('fnk_loop_page') ?>
 
         <?php do_action('fnk_left_container_end') ?>
 
@@ -38,9 +29,7 @@
 
     <?php } else { ?>
 
-        <?php do_action('fnk_welcome'); ?>
-
-        <?php do_action('fnk_loop_recent_news'); ?>
+        <?php do_action('fnk_loop_page') ?>
 
     <?php } ?>
 

@@ -1,4 +1,4 @@
-<?php echo __FILE__; ?>
+<?php //echo __FILE__; ?>
 <?php
     $cs_paged = (get_query_var('paged')) ? get_query_var('paged') : 1;
     $cs_args = array(
@@ -34,8 +34,8 @@
 <div class="recent-news">
 <?php echo do_shortcode( '[fnk_title line="'.$fnk_short_line.'" english="'.$category_name.'"]'.$fnk_additional_language.'[/fnk_title]' ); ?>
     <div class="blog-item">
-<?php if ($wp_query->have_posts()) : ?>
-    <?php while ($wp_query->have_posts()) : $wp_query->the_post(); ?>
+    <?php if ($wp_query->have_posts()) : ?>
+        <?php while ($wp_query->have_posts()) : $wp_query->the_post(); ?>
             <div class="blog-layout">
 
                 <a href="<?php echo the_permalink(); ?>" class="" title="<?php the_title_attribute(); ?>">
@@ -66,7 +66,7 @@
                 <a href="<?php echo the_permalink(); ?>" class="readmore floatr" title="<?php the_title_attribute(); ?>">点击详情...</a>
             </div>
 
-    <?php endwhile; ?>
+        <?php endwhile; ?>
     </div>
     <?php else : ?>
         <h2>Sorry, what you looking for cannot be found. :(</h2>

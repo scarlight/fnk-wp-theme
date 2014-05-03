@@ -262,7 +262,8 @@ div.page-navigation {
   padding: 0;
   border: 0;
 }
-div.page-navigation a {
+div.page-navigation a,
+div.page-navigation span {
   -webkit-transition: all 0.2s ease-out;
   -moz-transition: all 0.2s ease-out;
   transition: all 0.2s ease-out;
@@ -274,12 +275,14 @@ div.page-navigation > span:first-child {
   border-bottom-right-radius: 0;
   border-top-right-radius: 0;
 }
-div.page-navigation a.active_page {
+div.page-navigation a.active_page,
+div.page-navigation span.current {
   color: white;
   background: #338f7d;
   border: solid 1px #338f7d;
 }
-div.page-navigation a.active_page:hover {
+div.page-navigation a.active_page:hover,
+div.page-navigation span.current:hover {
   background: #2c7c6d;
   border: solid 1px #dddddd;
   border-right: solid 1px transparent;
@@ -317,6 +320,34 @@ div.result-info {
   -webkit-background-clip: padding-box;
   background-clip: padding-box;
   margin-top: -25px;
+  margin-left: -30px;
+  margin-right: 30px;
+}
+.blog-layout-single {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: auto;
+  padding: 5px 0 0 30px;
+  margin-bottom: 34px;
+  word-wrap: break-word;
+}
+.blog-layout-single:before,
+.blog-layout-single:after {
+  content: " ";
+  display: table;
+}
+.blog-layout-single:after {
+  clear: both;
+}
+.blog-layout-single img {
+  -webkit-border-radius: 12px;
+  -moz-border-radius: 12px;
+  border-radius: 12px;
+  -moz-background-clip: padding;
+  -webkit-background-clip: padding-box;
+  background-clip: padding-box;
+  margin-top: 0px;
   margin-left: -30px;
   margin-right: 30px;
 }
@@ -544,13 +575,44 @@ div.latest-cause img {
 .fnk-contact .ajax-loader {
   margin-top: 10px;
 }
+.fnk-contact span.wpcf7-not-valid-tip {
+  position: absolute;
+  display: inline-block;
+  font-size: 13px;
+  color: white;
+  text-align: center;
+  width: auto;
+  height: auto;
+  padding: 5px 10px;
+  top: 0%;
+  right: 0%;
+  background-color: #FFC01D;
+  border: solid 1px #fdc600;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+  -moz-background-clip: padding;
+  -webkit-background-clip: padding-box;
+  background-clip: padding-box;
+  -webkit-box-shadow: 0 0 5px #ffc01d;
+  -moz-box-shadow: 0 0 5px #ffc01d;
+  box-shadow: 0 0 5px #ffc01d;
+  z-index: 2;
+}
 .fnk-contact div.wpcf7-validation-errors {
-  color: #282828;
+  color: white;
+  text-align: center;
   border: none;
-  background: #f7e700;
-  -webkit-box-shadow: 0 0 10px #b7b09f;
-  -moz-box-shadow: 0 0 10px #b7b09f;
-  box-shadow: 0 0 10px #b7b09f;
+  background: #aca490;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+  -moz-background-clip: padding;
+  -webkit-background-clip: padding-box;
+  background-clip: padding-box;
+  -webkit-box-shadow: 0 0 8px #cdc8bc;
+  -moz-box-shadow: 0 0 8px #cdc8bc;
+  box-shadow: 0 0 8px #cdc8bc;
 }
 .fnk-contact div.wpcf7-mail-sent-ok {
   color: white;
@@ -559,6 +621,12 @@ div.latest-cause img {
   -webkit-box-shadow: 0 0 5px #3aa28e;
   -moz-box-shadow: 0 0 5px #3aa28e;
   box-shadow: 0 0 5px #3aa28e;
+}
+.flex-control-paging li a {
+  background: #ffffff !important;
+}
+.flex-control-paging li a.flex-active {
+  background-color: #ffc01d !important;
 }
 html,
 body {

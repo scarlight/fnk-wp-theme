@@ -123,7 +123,7 @@ class fnk_latest_cause extends WP_Widget {
     ?>
         <img width="<?php echo $image_url[1]; ?>" height="<?php echo ($image_url[2]) ?>" src="<?php echo $image_url[0]; ?>" alt="<?php echo $cn_title." | ".$en_title; ?>">
     <?php else : ?>
-        <img src="<?php echo FNK_IMAGES; ?>/fnk-logo-no-photo.jpg" width="220" height="110" alt="">
+        <img class="round-corner-image" src="<?php echo FNK_IMAGES; ?>/fnk-logo-no-photo-220.jpg" width="220" height="110" alt="">
     <?php endif; ?>
 
     <p class="zh">

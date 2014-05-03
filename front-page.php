@@ -7,7 +7,7 @@
  *
  */
 ?>
-<?php echo __FILE__ ?>
+<?php //echo __FILE__ ?>
 <?php get_header(); ?>
 
 <?php do_action('fnk_body_upper_side'); ?>

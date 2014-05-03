@@ -1,8 +1,8 @@
 <?php
 /**
- * Base : index.php template file
+ * Blog Single : single.php
  *
- * Base file used when absents of custom template
+ * Single post view for blogs
  * WordPress site.
  *
  */
@@ -10,23 +10,13 @@
 <?php //echo __FILE__ ?>
 <?php get_header(); ?>
 
-<?php
-
-    echo "<pre>";
-        print_r($wp_query);
-    echo "</pre>";
-
-?>
-
 <?php do_action('fnk_body_upper_side'); ?>
 
     <?php if ( is_active_sidebar( 'right_sidebar' ) ) { ?>
 
         <?php do_action('fnk_left_container_start') ?>
 
-            <?php do_action('fnk_welcome'); ?>
-
-            <?php do_action('fnk_loop_recent_news'); ?>
+            <?php do_action('fnk_loop_page') ?>
 
         <?php do_action('fnk_left_container_end') ?>
 
@@ -38,9 +28,7 @@
 
     <?php } else { ?>
 
-        <?php do_action('fnk_welcome'); ?>
-
-        <?php do_action('fnk_loop_recent_news'); ?>
+        <?php do_action('fnk_loop_page') ?>
 
     <?php } ?>
 

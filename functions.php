@@ -45,6 +45,8 @@ function fnk_theme_setup_init()
     add_action('fnk_post', "add_fnk_post", 10, 1); // not using at the momment
     add_action('fnk_welcome', "add_fnk_welcome", 10, 1);
     add_action('fnk_loop_recent_news', "add_fnk_loop_recent_news", 10, 1);
+    add_action('fnk_loop_page', "add_fnk_loop_page", 10, 1);
+    add_action('fnk_loop_blog', "add_fnk_loop_category", 10, 1);
 
     add_filter('language_attributes','fnk_language_attributes');                                    /* better ie10 or less browser detection via language_attributes filter; http://simplemediacode.info/snippets/better-brower-detection-with-language_attributes-filter-in-wordpress/ */
     add_filter('body_class','fnk_homepage_add_class');                                              /* Add "homepage" class to body when viewing home page. */
@@ -270,6 +272,14 @@ function add_fnk_welcome()
 
 function add_fnk_loop_recent_news(){
     locate_template( 'includes/loops/fnk-loop-recent-news.php', true, true );
+}
+
+function add_fnk_loop_page(){
+    locate_template( 'includes/loops/fnk-post.php', true, true );
+}
+
+function add_fnk_loop_category(){
+    locate_template( 'includes/loops/fnk-loop-category.php', true, true );
 }
 
 function fnk_excerpt_length($len) {
