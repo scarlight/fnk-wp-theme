@@ -118,8 +118,8 @@ class fnk_latest_cause extends WP_Widget {
     <a href="<?php echo $page_link; ?>" class="sidebar-view-all floatr">所有事件 view all</a>
     <div class="clear"></div>
 
-    <?php if ( $thumb || wp_get_attachment_image_src( $thumb, 'sidebar_thumb') ) :
-        $image_url = wp_get_attachment_image_src( $thumb, 'sidebar_thumb');
+    <?php if ( $thumb || wp_get_attachment_image_src( $thumb, 'sidebar-thumb') ) :
+        $image_url = wp_get_attachment_image_src( $thumb, 'sidebar-thumb');
     ?>
         <img width="<?php echo $image_url[1]; ?>" height="<?php echo ($image_url[2]) ?>" src="<?php echo $image_url[0]; ?>" alt="<?php echo $cn_title." | ".$en_title; ?>">
     <?php else : ?>

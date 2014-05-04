@@ -1,6 +1,20 @@
 <?php //echo __FILE__; ?>
 <div>
-<?php echo do_shortcode( '[fnk_title line="'.$fnk_short_line.'" english="'.$category_name.'"]'.$fnk_additional_language.'[/fnk_title]' ); ?>
+    <?php
+
+        // Get the category
+        $category = get_category_by_slug( get_query_var('category_name') ); //gets var from $wp_query for this category of posts
+        // Get Category Name
+        $category_name = $category->name;
+        // Get Category Meta
+        $fnk_additional_language = get_tax_meta($category->term_id,'fnk_tax_text_field_id');
+        $fnk_short_line = get_tax_meta($category->term_id,'fnk_tax_radio_field_id');
+        $fnk_short_line = ($fnk_short_line == "yes") ? "short" : Null;
+
+        echo do_shortcode( '[fnk_title line="'.$fnk_short_line.'" english="'.$category_name.'"]'.$fnk_additional_language.'[/fnk_title]' );
+
+    ?>
+
     <div class="blog-item">
     <?php if ( have_posts() ) : ?>
         <?php while ( have_posts() ) :  the_post(); ?>
@@ -8,9 +22,9 @@
 
                 <a href="<?php echo the_permalink(); ?>" class="" title="<?php the_title_attribute(); ?>">
                     <?php if ( has_post_thumbnail() ) :
-                        $image_url = wp_get_attachment_image_src( get_post_thumbnail_id(), 'full');
+                        $image_url = wp_get_attachment_image_src( get_post_thumbnail_id(), 'featured-recent-news');
                     ?>
-                        <img class="left" width="<?php echo $image_url[1]; ?>" height="<?php echo ($image_url[2] > 194) ? 194 : $image_url[2] ; ?>" src="<?php echo $image_url[0]; ?>" alt="">
+                        <img class="left" width="<?php echo $image_url[1]; ?>" height="<?php echo $image_url[2]; ?>" src="<?php echo $image_url[0]; ?>" alt="">
                     <?php else : ?>
                         <img class="left" style="width:304px; height:194px; background : #FFFFFF url(<?php echo FNK_IMAGES; ?>/fnk-logo-no-photo.jpg) no-repeat center center scroll; border:solid 1px #e7e4dd;" src="<?php echo FNK_IMAGES ?>/space.gif" alt="">
                     <?php endif; ?>
@@ -37,24 +51,27 @@
     <?php
 
     $big = 999999999;
-    $args_paginate =
-        array(
-            'base'               => str_replace( $big, '%#%', esc_url( get_pagenum_link( $big ) ) ),
-            'format'             => '?paged=%#%',
-            'current'            => max( 1, get_query_var('paged') ),
-            'total'              => $wp_query->max_num_pages,
-            'prev_next'          => True,
-            'prev_text'          => __('« Previous'),
-            'next_text'          => __('Next »'),
-            'type'               => 'array'
-        );
-    $custom_pg = '<div class="page-navigation" style="margin-left: 304px;"><ul class="pagination">';
-    foreach ( paginate_links( $args_paginate ) as $link ) {
-        $custom_pg .= '<li>'.$link.'</li>';
-    }
-    $custom_pg .= '</ul></div>';
+    $args = array(
+        'base'      => str_replace( $big, '%#%', esc_url( get_pagenum_link( $big ) ) ),
+        'format'    => '?paged=%#%',
+        'current'   => max( 1, get_query_var('paged') ),
+        'total'     => $wp_query->max_num_pages,
+        'prev_next' => True,
+        'prev_text' => __('« Previous'),
+        'next_text' => __('Next »'),
+        'type'      => 'array'
+    );
 
-    echo $custom_pg;
+    // avoid trap due to under the limit zone
+    if ( paginate_links( $args ) ) {
+        $custom_pg = '<div class="page-navigation" style="margin-left: 304px;"><ul class="pagination">';
+        foreach ( paginate_links( $args ) as $eachlink ) {
+            $custom_pg .= '<li>'.$eachlink.'</li>';
+        }
+        $custom_pg .= '</ul></div>';
+
+        echo $custom_pg;
+    }
     ?>
 
     <div class="clear"></div>

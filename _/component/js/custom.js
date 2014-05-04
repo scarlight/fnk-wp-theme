@@ -37,7 +37,50 @@ cs(document).ready(function(){
     }
 
     cs(window).load(function(){
-
+        if(cs(".event-thumbnail").length > 0){
+            cs(".event-thumbnail").carouFredSel({
+                circular    : true,
+                infinite    : true,
+                responsive  : false,
+                direction   : "left",
+                width       : 690,
+                height      : 51,
+                align       : "center",
+                padding     : 0,
+                items       : {
+                    visible : 8,
+                    minimum : "",
+                    start   : 0,
+                    width   : "variable", //no jumps after each scroll completes
+                    height  : 51
+                },
+                scroll      : {
+                    items   : 1,
+                    fx      : "linear",
+                    easing  : "easeOutCubic",
+                    duration: 3000,
+                    pauseOnHover: false
+                },
+                auto        : {
+                    play    : true,
+                    duration: 700
+                },
+                prev        : {
+                    button  : function(){
+                        var prev = cs(this).parents("div.fnk-photo-gallery").find("div.navi-prev-next a.prev");
+                        return prev;
+                    },
+                    duration: 700
+                },
+                next        : {
+                    button  : function(){
+                        var next = cs(this).parents("div.fnk-photo-gallery").find("div.navi-prev-next a.next");
+                        return next;
+                    },
+                    duration: 700
+                }
+            });
+        }
     });
 
 });

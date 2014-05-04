@@ -95,7 +95,7 @@ class fnk_donate_widget extends WP_Widget {
                 <strong><?php echo $en_desc; ?></strong><br>
                 <a class="btn btn-default btn-sm" href="<?php echo $link; ?>"><?php echo $donate_phrase; ?></a>
             </div>
-            <img src="images/space.gif" width="0" height="135" alt="">
+            <img src="<?php echo FNK_IMAGES; ?>/space.gif" width="0" height="135" alt="">
         </div>
 <?php
     }

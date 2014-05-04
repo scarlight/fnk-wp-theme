@@ -234,26 +234,28 @@ add_shortcode('fnk_post_image', 'fnk_post_image_shortcode');
 /*
 *
 * A shortcode for fnk event carousel - the slider tag
-* [md_slider]
-* [md_img item="2231" title="KLIGP 2014" group="event2014"]
-* [md_img item="2231" title="KLIGP 2014" group="event2014"]
-* [md_img item="2231" title="KLIGP 2014" group="event2014"]
-* [md_img item="2231" title="KLIGP 2014" group="event2014"]
-* [md_img item="2231" title="KLIGP 2014" group="event2012"]
-* [/md_slider]
+* [fnk_slider date="" title=""]
+* [fnk_img id="2231" title="KLIGP 2014" group="event2014"]
+* [fnk_img id="2231" title="KLIGP 2014" group="event2014"]
+* [fnk_img id="2231" title="KLIGP 2014" group="event2014"]
+* [fnk_img id="2231" title="KLIGP 2014" group="event2014"]
+* [fnk_img id="2231" title="KLIGP 2014" group="event2012"]
+* [/fnk_slider]
 *
-* [md_slider]
-* [md_img item="1310" title="KLIGP 2012" group="event2012"]
-* [md_img item="1309" title="KLIGP 2012" group="event2012"]
-* [md_img item="1308" title="KLIGP 2012" group="event2012"]
-* [md_img item="1307" title="KLIGP 2012" group="event2012"]
-* [md_img item="1310" title="KLIGP 2012" group="event2012"]
-* [/md_slider]
+* [fnk_slider date="" title=""]
+* [fnk_img id="1310" title="KLIGP 2012" group="event2012"]
+* [fnk_img id="1309" title="KLIGP 2012" group="event2012"]
+* [fnk_img id="1308" title="KLIGP 2012" group="event2012"]
+* [fnk_img id="1307" title="KLIGP 2012" group="event2012"]
+* [fnk_img id="1310" title="KLIGP 2012" group="event2012"]
+* [/fnk_slider]
 *
 */
 function fnk_slider_shortcode($atts, $content){
     $atts = shortcode_atts(
         array(
+            'date' => '',
+            'title' => '',
             'content' => !empty($content) ? $content : NULL
         ), $atts
     );
@@ -261,24 +263,34 @@ function fnk_slider_shortcode($atts, $content){
     extract($atts);
 
     if(!empty($content)){
-        $concatenate  = '<div class="event-buttons"><a class="prev"></a><a class="next"></a></div>';
-        $concatenate .= '<ul class="event-thumbnail">'.do_shortcode($content).'</ul>';
-        return $concatenate;
+
+    $slider = '<div class="fnk-photo-gallery">';
+    $slider.= '<h4 style="color:#606060; font-weight:900;">'.$date.' - '.$title.'</h4>';
+    $slider.= '<div class="navi-prev-next">';
+    $slider.= '<a class="prev" href="#"></a>';
+    $slider.= '<a class="next" href="#"></a>';
+    $slider.= '</div>';
+    $slider.= '<ul class="event-thumbnail">';
+    $slider.= do_shortcode($content);
+    $slider.= '</ul><div class="clear"></div></div>';
+
+    return $slider;
     }
 
     return "";
 }
+add_shortcode('fnk_slider', 'fnk_slider_shortcode');
 
 /*
 *
 * A shortcode for fnk event carousel - the img tag
-* [md_img item="1310" title="KLIGP 2012" group="event2012"]
+* [fnk_img id="1310" title="KLIGP 2012" group="event2012"]
 *
 */
 function fnk_slider_image_shortcode($atts, $content){
     $atts = shortcode_atts(
         array(
-            'item' => 0,
+            'id' => 0,
             'title' => "",
             'group' => "",
             'content' => !empty($content) ? $content : NULL
@@ -286,36 +298,44 @@ function fnk_slider_image_shortcode($atts, $content){
     );
 
     extract($atts);
-    require_once('include/bfi_thumb/BFI_Thumb.php');
 
-    $item = absint($item);
-    if(isset($item) && !empty($item) ){
-        $img_url = wp_get_attachment_image_src($item, "full");
-        $params_thumbnail = array(
-            'width' => 130,
-            'height' => 100,
-            'crop' => true
-        );
+    if(isset($group) && !empty($group)){
+        $group = "lightbox"."-".$group;
+    }
+    else{
+        $group = "lightbox";
+    }
 
-        $img_url_thumbnail = bfi_thumb($img_url[0] , $params_thumbnail);
+    //$id = absint($id);
+    if(isset($id) && !empty($id) ) {
 
-        if(isset($group) && !empty($group)){
-            $group = "lightbox"."-".$group;
+        $img_large = wp_get_attachment_image_src($id, "event-gallery-photo");
+        $img_thumb = wp_get_attachment_image_src($id, "event-gallery-thumb");
+
+        if( !empty($img_thumb) ) {
+
+            $concatenate  = '<li><a href="'.$img_large[0].'" title="'.$title.'" rel="'.$group.'">';
+            if( empty($img_large) ){
+                $concatenate  = '<li><a href="'.FNK_IMAGES.'/fnk-logo-no-photo-800-600.jpg" title="'.$title.'" rel="'.$group.'">';
+            }
+            $concatenate .= '<img alt="'.$title.'" src="'.$img_thumb[0].'"'.' width="'.$img_thumb[1].'" height="'.$img_thumb[2].'" />';
+            $concatenate .= '</a></li>';
+
+            return $concatenate;
         }
-        else{
-            $group = "lightbox";
+        else {
+
+            $concatenate  = '<li><a href="'.FNK_IMAGES.'/fnk-logo-no-photo-800-600.jpg" title="'.$title.'" rel="'.$group.'">';
+            $concatenate .= '<img alt="'.$title.'" src="'.FNK_IMAGES.'/no-photo-68.jpg"'.' width="68" height="49" />';
+            $concatenate .= '</a></li>';
+
+            return $concatenate;
         }
-
-        $concatenate  = '<li><a href="'.$img_url[0].'" title="'.$title.'" rel="'.$group.'">';
-        $concatenate .= '<img alt="'.$title.'" src="'.$img_url_thumbnail.'"'.' width="'.$params_thumbnail['width'].'px" height="'.$params_thumbnail['height'].'px" />';
-        $concatenate .= '</a></li>';
-
-        return $concatenate;
     }
 
     return "";
-
 }
+add_shortcode('fnk_img', 'fnk_slider_image_shortcode');
 
 /*
 *
@@ -325,7 +345,19 @@ function fnk_slider_image_shortcode($atts, $content){
 function fnk_shortcode_empty_paragraph_fix($content) /* Fixes shortcode using wpautop that inserts additional p and br tag. */
 {
     // array of custom shortcodes requiring the fix
-    $block = join("|",array('fnk_title','fnk_donation_table','fnk_donation_row','fnk_left_box_image','fnk_right_box_image','fnk_left_box_text', 'fnk_right_box_text', 'fnk_post_image'));
+    $block = join("|",array(
+        'fnk_title',
+        'fnk_donation_table',
+        'fnk_donation_row',
+        'fnk_left_box_image',
+        'fnk_right_box_image',
+        'fnk_left_box_text',
+        'fnk_right_box_text',
+        'fnk_post_image',
+        'fnk_slider',
+        'fnk_img'
+        )
+    );
 
     // opening tag
     $rep = preg_replace("/(<p>)?\[($block)(\s[^\]]+)?\](<\/p>|<br \/>)?/","[$2$3]",$content);

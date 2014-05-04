@@ -105,7 +105,7 @@ class fnk_recent_post_by_category extends WP_Widget {
 
                     $image_exist = false;
                     if( has_post_thumbnail() ){
-                        $image = wp_get_attachment_image_src( get_post_thumbnail_id(), 'sidebar_tiny_thumb');
+                        $image = wp_get_attachment_image_src( get_post_thumbnail_id(), 'sidebar-tiny-thumb');
                         $image_url = $image[0];
                         $image_width = $image[1];
                         $image_height = $image[2];

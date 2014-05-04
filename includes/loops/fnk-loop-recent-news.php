@@ -40,9 +40,9 @@
 
                 <a href="<?php echo the_permalink(); ?>" class="" title="<?php the_title_attribute(); ?>">
                     <?php if ( has_post_thumbnail() ) :
-                        $image_url = wp_get_attachment_image_src( get_post_thumbnail_id(), 'full');
+                        $image_url = wp_get_attachment_image_src( get_post_thumbnail_id(), 'featured-recent-news');
                     ?>
-                        <img class="left" width="<?php echo $image_url[1]; ?>" height="<?php echo ($image_url[2] > 194) ? 194 : $image_url[2] ; ?>" src="<?php echo $image_url[0]; ?>" alt="">
+                        <img class="left" width="<?php echo $image_url[1]; ?>" height="<?php echo $image_url[2]; ?>" src="<?php echo $image_url[0]; ?>" alt="">
                     <?php else : ?>
                         <img class="left" style="width:304px; height:194px; background : #FFFFFF url(<?php echo FNK_IMAGES; ?>/fnk-logo-no-photo.jpg) no-repeat center center scroll; border:solid 1px #e7e4dd;" src="<?php echo FNK_IMAGES ?>/space.gif" alt="">
                     <?php endif; ?>
