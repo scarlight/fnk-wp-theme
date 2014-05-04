@@ -59,6 +59,7 @@ function fnk_theme_setup_init()
     add_theme_support( 'custom-background' );
     add_image_size( 'featured-recent-news', 304, 194, true );
     add_image_size( 'sidebar-thumb', 220, 110, true );
+    add_image_size( 'featured-detail', 220, 154, true );
     add_image_size( 'sidebar-tiny-thumb', 42, 42, true );
     add_image_size( 'event-gallery-thumb', 68, 49, true );
     add_image_size( 'event-gallery-photo', 800, 600, true );
@@ -72,6 +73,7 @@ function fnk_theme_setup_init()
     require_once("includes/shortcode/shortcode.php");
     require_once("includes/custom-metabox/functions.php");
     require_once("includes/taxonomy-metabox/functions.php");
+    require_once("includes/options/theme-option.php");
 
 }
 add_action( 'after_setup_theme', 'fnk_theme_setup_init' );

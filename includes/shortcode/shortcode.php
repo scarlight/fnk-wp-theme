@@ -339,6 +339,37 @@ add_shortcode('fnk_img', 'fnk_slider_image_shortcode');
 
 /*
 *
+* A shortcode for fnk event carousel - the img tag
+* [fnk_list_detail id="12" title="Important Subject"] -content- [/fnk_list_detail]
+*
+*/
+function fnk_list_detail_shortcode($atts, $content){
+    $atts = shortcode_atts(
+        array(
+            'id' => 0,
+            'title' => "",
+            'content' => !empty($content) ? $content : NULL
+        ), $atts
+    );
+
+    extract($atts);
+
+    if( !empty($id) ){
+        $img = wp_get_attachment_image_src($id, "featured-detail");
+
+        $image  = '<img alt="'.$title.'" src="'.$img[0].'"'.' width="'.$img[1].'" height="'.$img[2].'" />';
+
+        if( empty($img) ){
+            $concatenate  = '<a href="'.FNK_IMAGES.'/fnk-logo-no-photo-800-600.jpg" title="'.$title.'" >';
+        }
+
+        $concatenate .= '<img alt="'.$title.'" src="'.$img[0].'"'.' width="'.$img[1].'" height="'.$img[2].'" />';
+
+    }
+}
+add_shortcode('fnk_list_detail', 'fnk_list_detail_shortcode');
+/*
+*
 * Fix paragraph and break issue
 *
 */
