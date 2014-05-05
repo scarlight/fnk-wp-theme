@@ -14,7 +14,7 @@
             ?>
 
         <?php endwhile; ?>
-    <?php else; ?>
+    <?php else : ?>
         <?php //show the same 404.php, this html fragment can be placed in a different way too ?>
         <div>
             <?php
