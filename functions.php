@@ -229,7 +229,7 @@ function fnk_homepage_add_class() /* Add "homepage" class to body when viewing h
         $classes[] = 'homepage custom-background';
     }
     else{
-        $classes[] = '';
+        $classes[] = 'custom-background';
     }
     return $classes;
 }

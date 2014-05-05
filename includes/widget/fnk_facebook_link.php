@@ -43,7 +43,7 @@ class fnk_facebook_link extends WP_Widget {
 
     // Check if text is set
     if( $link ) {
-        echo '<a href="'.$link.'"><img src="'.FNK_IMAGES.'/like_us_on_facebook.jpg" width="132" height="51" alt=""></a>';
+        echo '<a href="'.$link.'"><img src="'.FNK_IMAGES.'/like_us_on_facebook.jpg" target="_blank" width="132" height="51" alt=""></a>';
     }
         echo $after_widget;
     }

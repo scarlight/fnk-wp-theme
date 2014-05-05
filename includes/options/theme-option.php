@@ -20,7 +20,7 @@ function fnk_customize_register( $wp_customize ) {
     ) );
 
     // Footer
-    require_once dirname(__FILE__).'\library\textarea-custom-control.php';
+    require_once dirname(__FILE__).'/library/textarea-custom-control.php';
     $wp_customize->add_setting( 'fnk_customize_footer_setting', array(
         'default' => '© 2014 法能宫慈善基金 Persatuan Penganut Dewa Fatt Neng Kong',
     ) );

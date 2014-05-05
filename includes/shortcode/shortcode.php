@@ -235,19 +235,19 @@ add_shortcode('fnk_post_image', 'fnk_post_image_shortcode');
 *
 * A shortcode for fnk event carousel - the slider tag
 * [fnk_slider date="" title=""]
-* [fnk_img id="2231" title="KLIGP 2014" group="event2014"]
-* [fnk_img id="2231" title="KLIGP 2014" group="event2014"]
-* [fnk_img id="2231" title="KLIGP 2014" group="event2014"]
-* [fnk_img id="2231" title="KLIGP 2014" group="event2014"]
-* [fnk_img id="2231" title="KLIGP 2014" group="event2012"]
+* [fnk_img id="2231" title="Event 2014" group="event2014"]
+* [fnk_img id="2231" title="Event 2014" group="event2014"]
+* [fnk_img id="2231" title="Event 2014" group="event2014"]
+* [fnk_img id="2231" title="Event 2014" group="event2014"]
+* [fnk_img id="2231" title="Event 2014" group="event2012"]
 * [/fnk_slider]
 *
 * [fnk_slider date="" title=""]
-* [fnk_img id="1310" title="KLIGP 2012" group="event2012"]
-* [fnk_img id="1309" title="KLIGP 2012" group="event2012"]
-* [fnk_img id="1308" title="KLIGP 2012" group="event2012"]
-* [fnk_img id="1307" title="KLIGP 2012" group="event2012"]
-* [fnk_img id="1310" title="KLIGP 2012" group="event2012"]
+* [fnk_img id="1310" title="Event 2012" group="event2012"]
+* [fnk_img id="1309" title="Event 2012" group="event2012"]
+* [fnk_img id="1308" title="Event 2012" group="event2012"]
+* [fnk_img id="1307" title="Event 2012" group="event2012"]
+* [fnk_img id="1310" title="Event 2012" group="event2012"]
 * [/fnk_slider]
 *
 */
@@ -339,11 +339,11 @@ add_shortcode('fnk_img', 'fnk_slider_image_shortcode');
 
 /*
 *
-* A shortcode for fnk event carousel - the img tag
-* [fnk_list_detail id="12" title="Important Subject"] -content- [/fnk_list_detail]
+* A shortcode for fnk recently donated information
+* [fnk_list_info id="12" title="Important Subject"] -content- [fnk_list_info_detail name="name" telephone="012345678"][/fnk_list_info]
 *
 */
-function fnk_list_detail_shortcode($atts, $content){
+function fnk_list_info_shortcode($atts, $content){
     $atts = shortcode_atts(
         array(
             'id' => 0,
@@ -354,20 +354,67 @@ function fnk_list_detail_shortcode($atts, $content){
 
     extract($atts);
 
-    if( !empty($id) ){
+    if( !empty($id) ) {
         $img = wp_get_attachment_image_src($id, "featured-detail");
 
-        $image  = '<img alt="'.$title.'" src="'.$img[0].'"'.' width="'.$img[1].'" height="'.$img[2].'" />';
+        $image  = '<img class="left" src="'.$img[0].'"'.' width="'.$img[1].'" height="'.$img[2].'" alt="'.$title.'"/>';
 
         if( empty($img) ){
-            $concatenate  = '<a href="'.FNK_IMAGES.'/fnk-logo-no-photo-800-600.jpg" title="'.$title.'" >';
+            $image  = '<img class="left" src="'.FNK_IMAGES.'/fnk-logo-no-photo-220-154.jpg" width="218" height="152" alt="'.$title.'"/>';
         }
 
-        $concatenate .= '<img alt="'.$title.'" src="'.$img[0].'"'.' width="'.$img[1].'" height="'.$img[2].'" />';
+        $layout = '<div class="blog-layout-single">';
+        $layout.= $image;
+        $layout.= '<p class="zh content-limiter">';
+        $layout.= '<span class="title">'.$title.'</span><br>';
+        $layout.= do_shortcode($content);
+        $layout.= '</p>';
+        $layout.= '<div class="clear"></div>';
+        $layout.= '</div>';
 
+        return $layout;
+    }
+    else
+    {
+        return "";
     }
 }
-add_shortcode('fnk_list_detail', 'fnk_list_detail_shortcode');
+add_shortcode('fnk_list_info', 'fnk_list_info_shortcode');
+
+/*
+*
+* A shortcode for fnk recently donated info - the person detail
+* [fnk_list_info_detail name="name" contact="012345678"]
+*
+*/
+function fnk_list_info_detail_shortcode($atts, $content){
+    $atts = shortcode_atts(
+        array(
+            'name'      => '',
+            'telephone' => '',
+            'content'   => !empty($content) ? $content : NULL
+        ), $atts
+    );
+
+    extract($atts);
+
+    if( !empty($name) ) {
+
+        $telephone = !empty($telephone) ? ', Telephone: '.$telephone : "";
+        $detail = '<br>';
+        $detail.= '<span class="text-sm">';
+        $detail.= 'Name: '.$name;
+        $detail.= $telephone;
+        $detail.= '</span>';
+
+        return $detail;
+    }
+    else {
+        return "";
+    }
+}
+add_shortcode('fnk_list_info_detail', 'fnk_list_info_detail_shortcode');
+
 /*
 *
 * Fix paragraph and break issue
@@ -386,7 +433,9 @@ function fnk_shortcode_empty_paragraph_fix($content) /* Fixes shortcode using wp
         'fnk_right_box_text',
         'fnk_post_image',
         'fnk_slider',
-        'fnk_img'
+        'fnk_img',
+        'fnk_list_info',
+        'fnk_list_info_detail'
         )
     );
 

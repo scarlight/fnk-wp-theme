@@ -68,22 +68,52 @@ class fnk_sidebar_menu extends WP_Widget {
         echo do_shortcode( '[fnk_title english="'.$en_title.'"]'.$cn_title.'[/fnk_title]' );
 
         // from http://codex.wordpress.org/Function_Reference/wp_get_nav_menu_items
-        $menu_items = wp_get_nav_menu_items($menu_id);
-        $menu_list = '<ul class="checkmark">';
-        foreach ( (array) $menu_items as $key => $menu_item ) {
-            $title       = $menu_item->title;
-            $url         = $menu_item->url;
-            $description = !empty($menu_item->description) ? $menu_item->description : '&nbsp;';
+        // $menu_items = wp_get_nav_menu_items($menu_id);
+        // $menu_list = '<ul class="checkmark">';
+        // foreach ( (array) $menu_items as $key => $menu_item ) {
+        //     $title       = $menu_item->title;
+        //     $url         = $menu_item->url;
+        //     $description = !empty($menu_item->description) ? $menu_item->description : '&nbsp;';
 
-            $menu_list .= '<li>';
-            $menu_list .= '<a href="'.$url.'">';
-            $menu_list .= '<span class="zh">'.$title.'</span>';
-            $menu_list .= '<span style="line-height:1.3;">'.$description.'</span></a>';
-            $menu_list .= '</li>';
+        //     $menu_list .= '<li>';
+        //     $menu_list .= '<a href="'.$url.'">';
+        //     $menu_list .= '<span class="zh">'.$title.'</span>';
+        //     $menu_list .= '<span style="line-height:1.3;">'.$description.'</span></a>';
+        //     $menu_list .= '</li>';
+        // }
+        // $menu_list .= '</ul>';
+
+        //echo $menu_list;
+
+        // Above works but no css class retrieved. Below works but with css class added.
+        // no need theme-location too.
+        if ( has_nav_menu( 'main-menu' ) ) {
+            $defaults = array(
+                'theme_location'  => '',
+                'menu'            => $menu_id,
+                'container'       => '',
+                'container_class' => '',
+                'container_id'    => 'sidebar',
+                'menu_class'      => 'checkmark',
+                'menu_id'         => '',
+                'echo'            => true,
+                'fallback_cb'     => 'wp_page_menu',
+                'before'          => '',
+                'after'           => '',
+                'link_before'     => '',
+                'link_after'      => '',
+                'items_wrap'      => '<ul id="%1$s" class="%2$s">%3$s</ul>',
+                'depth'           => 0,
+                'walker'          => new fnk_description_walker()
+            );
+            wp_nav_menu( $defaults );
         }
-        $menu_list .= '</ul>';
+        else{
+            echo '<h4 style="position:relative;display:block;margin:0;" class="alert alert-warning">No Menu Assigned</h4>';
+        }
 
-        echo $menu_list;
+
+
     }
     else
     {
