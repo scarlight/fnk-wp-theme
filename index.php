@@ -7,16 +7,7 @@
  *
  */
 ?>
-<?php //echo __FILE__ ?>
 <?php get_header(); ?>
-
-<?php
-
-    echo "<pre>";
-        print_r($wp_query);
-    echo "</pre>";
-
-?>
 
 <?php do_action('fnk_body_upper_side'); ?>
 

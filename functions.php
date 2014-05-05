@@ -1,20 +1,4 @@
 <?php
-/******************************** TODO ********************************/
-/*
- - read the comment instructions if any before removing the comment & before uploading to the live server
- - remove any un-needed functions and filter calls
-*/
-/****************************** TODO END ******************************/
-/*
-                                    v
-                                    v
-                                    v
-                                    v
-                                    v
-                                    v
-                                    v
-*/
-
 //**********************************************************************************************//
 // START THEME SETUP.
 //**********************************************************************************************//
@@ -24,16 +8,16 @@ function fnk_theme_setup_init()
     //**********************************************************************************************//
     // START DEFINE CONSTANTS.
     //**********************************************************************************************//
-    // define ('WPCF7_AUTOP', false ); in wp-config
     define('FNK_THEMEROOT', get_template_directory_uri());
     define('FNK_IMAGES', FNK_THEMEROOT.'/images');
-    //define('WOOCOMMERCE_USE_CSS', false); for disabling woocommerce default css
 
-    add_action('wp_enqueue_scripts', 'fnk_load_css_files');                                         /* Load CSS Files */
-    add_action('wp_enqueue_scripts', 'fnk_load_js_files');                                          /* Load JS Files */
-    add_action('init', 'fnk_register_my_menus');                                                    /* Add Main Menus and Other Menus. */ /*Please replace the menu name accordingly with your theme */
-    // add_action( "fnk_header_breadcrumb", "fnk_template_header_breadcrumb", 10, 1);                  /* add an action for fnk header breadcrumb */
-    add_action('widgets_init', 'fnk_widgets_init' );                                                /* Register our sidebars and widgetized areas. */ /*Please modify the function accordingly with your theme */
+    //**********************************************************************************************//
+    // START ACTIONS AND FILTERS.
+    //**********************************************************************************************//
+    add_action('wp_enqueue_scripts', 'fnk_load_css_files');
+    add_action('wp_enqueue_scripts', 'fnk_load_js_files');
+    add_action('init', 'fnk_register_my_menus');
+    add_action('widgets_init', 'fnk_widgets_init' );
 
     add_action('fnk_body_upper_side', "add_fnk_body_upper_side", 10, 1);
     add_action('fnk_body_bottom_side', "add_fnk_body_bottom_side", 10, 1);
@@ -42,18 +26,17 @@ function fnk_theme_setup_init()
     add_action('fnk_right_container_start', "add_fnk_right_container_start", 10, 1);
     add_action('fnk_right_container_end', "add_fnk_right_container_end", 10, 1);
 
-    add_action('fnk_post', "add_fnk_post", 10, 1); // not using at the momment
     add_action('fnk_welcome', "add_fnk_welcome", 10, 1);
     add_action('fnk_loop_recent_news', "add_fnk_loop_recent_news", 10, 1);
     add_action('fnk_loop_page', "add_fnk_loop_page", 10, 1);
     add_action('fnk_loop_blog', "add_fnk_loop_category", 10, 1);
 
-    add_filter('language_attributes','fnk_language_attributes');                                    /* better ie10 or less browser detection via language_attributes filter; http://simplemediacode.info/snippets/better-brower-detection-with-language_attributes-filter-in-wordpress/ */
-    add_filter('body_class','fnk_homepage_add_class');                                              /* Add "homepage" class to body when viewing home page. */
-    add_filter('admin_footer_text', 'fnk_footer_admin');                                            /* Customise the footer in admin area */
-    add_filter('show_admin_bar', '__return_false' );                                                /* Remove the admin bar from the front end */
+    add_filter('language_attributes','fnk_language_attributes');
+    add_filter('body_class','fnk_homepage_add_class');
+    add_filter('admin_footer_text', 'fnk_footer_admin');
+    add_filter('show_admin_bar', '__return_false' );
     add_filter('excerpt_length', 'fnk_excerpt_length');
-    remove_action('wp_head', 'wp_generator');                                                       /* Remove the version number of WP. Warning - this info is also available in the readme.html file in your root directory - delete this file! */
+    remove_action('wp_head', 'wp_generator');
 
     add_theme_support( 'post-thumbnails' );
     add_theme_support( 'custom-background' );
@@ -159,22 +142,6 @@ function fnk_register_my_menus() /* Add Main Menus and Other Menus. */
     require_once ( "includes/templates-parts/fnk-menu-walker.php" );
 }
 
-function fnk_template_header_breadcrumb($args) /* add an action for fnk header breadcrumb */
-{
-
-    // add a php code with do_action('fnk_header_breadcrumb'); inside to kick this function running
-
-    if ( function_exists( 'breadcrumb_trail' ) ){
-        breadcrumb_trail(
-            array(
-                'show_on_front'=> false,
-                'separator' => '&gt;',
-                'show_browse' => false
-            )
-        );
-    }
-}
-
 function fnk_widgets_init() /* Register our sidebars and widgetized areas. */
 {
     if(function_exists("register_sidebar"))
@@ -267,11 +234,6 @@ function add_fnk_right_container_start()
 function add_fnk_right_container_end()
 {
     locate_template( 'includes/templates-parts/fnk-right-container-end.php', true, true );
-}
-
-function add_fnk_post()
-{
-    locate_template("includes/loops/fnk-post.php", true, true);
 }
 
 function add_fnk_welcome()

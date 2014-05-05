@@ -86,7 +86,7 @@ class fnk_sidebar_menu extends WP_Widget {
         //echo $menu_list;
 
         // Above works but no css class retrieved. Below works but with css class added.
-        // no need theme-location too.
+        // no need theme-location too. http://codex.wordpress.org/Function_Reference/wp_nav_menu
         if ( has_nav_menu( 'main-menu' ) ) {
             $defaults = array(
                 'theme_location'  => '',

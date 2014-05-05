@@ -27,11 +27,11 @@
             {
                 $wp_query->the_post();
 
-                $second_title = get_post_meta( get_the_ID(), '_fnk_optional_title_text', true );//the_ID() wont work
+                $second_title = get_post_meta( get_the_ID(), '_fnk_optional_title_text', true );//the_ID() wont work, its custom query
                 $deco = get_post_meta( get_the_ID(), '_fnk_short_line', true );
                 $deco = ($deco == "yes") ? "short" : Null;
 
-                echo do_shortcode( '[fnk_title line="'.$deco.'" english="'.$second_title.'"]'.get_the_title().'[/fnk_title]' );//the_title() wont work
+                echo do_shortcode( '[fnk_title line="'.$deco.'" english="'.$second_title.'"]'.get_the_title().'[/fnk_title]' );//the_title() wont work, its custom query
                 the_content();
             }
         }

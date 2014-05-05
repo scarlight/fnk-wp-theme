@@ -1,14 +1,11 @@
 <?php
 /**
- * Custom page.php template file
  *
  * Default template for page
  * WordPress site.
  *
  */
 ?>
-<?php //echo __FILE__ ?>
-
 <?php get_header(); ?>
 
 <?php do_action('fnk_body_upper_side'); ?>

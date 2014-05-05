@@ -417,7 +417,7 @@ add_shortcode('fnk_list_info_detail', 'fnk_list_info_detail_shortcode');
 
 /*
 *
-* Fix paragraph and break issue
+* Fix paragraph and break issue. Not using since this theme not using WPAUTOP
 *
 */
 function fnk_shortcode_empty_paragraph_fix($content) /* Fixes shortcode using wpautop that inserts additional p and br tag. */
@@ -447,4 +447,4 @@ function fnk_shortcode_empty_paragraph_fix($content) /* Fixes shortcode using wp
 
     return $rep;
 }
-add_filter('the_content', 'fnk_shortcode_empty_paragraph_fix'); /* Fixes shortcode using wpautop that inserts additional p and br tag. */ /*Please replace with your theme shortcode in the param */
+add_filter('the_content', 'fnk_shortcode_empty_paragraph_fix'); /* Fixes shortcode using wpautop that inserts additional p and br tag. */

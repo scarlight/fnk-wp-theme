@@ -1,8 +1,3 @@
-<?php
-
-//$fnk_footer_info = get_option("fnk_theme_options");
-
-?>
                 </div>
                 <div id="fnk-footer-wrp">
                     <div id="fnk-footer">

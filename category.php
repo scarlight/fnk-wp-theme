@@ -1,12 +1,11 @@
 <?php
 /**
- * Blog : home.php template file
+ * Blog : category.php template file
  *
- * Used to display a blog content on your WordPress site
+ * Used to display category of posts on your WordPress site
  *
  */
 ?>
-<?php //echo __FILE__ ?>
 <?php get_header(); ?>
 
 <?php do_action('fnk_body_upper_side'); ?>
