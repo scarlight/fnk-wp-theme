@@ -97,6 +97,80 @@ add_shortcode('fnk_donation_row', 'fnk_donation_row_shortcode');
 
 /*
 *
+* Create donator list table
+* [fnk_donator_list_table]
+* [fnk_donator_list date="9-Jan" receipt="CASH" name="何亚财" amount="1000.00" ref="MONTHLY(1'2014)"]
+* [fnk_donator_list date="9-Jan" receipt="CASH" name="何亚财" amount="1000.00" ref="MONTHLY(1'2014)"]
+* [fnk_donator_list date="9-Jan" receipt="CASH" name="何亚财" amount="1000.00" ref="MONTHLY(1'2014)"]
+* [fnk_donator_list date="9-Jan" receipt="CASH" name="何亚财" amount="1000.00" ref="MONTHLY(1'2014)"]
+* [fnk_donator_list date="9-Jan" receipt="CASH" name="何亚财" amount="1000.00" ref="MONTHLY(1'2014)"]
+* [/fnk_donator_list_table]
+*
+*/
+function fnk_donator_list_table_shortcode($atts, $content){
+    $atts = shortcode_atts(
+        array(
+            'content' => !empty($content) ? $content : NULL
+        ), $atts
+    );
+
+    extract($atts);
+
+    if(!empty($content)){
+        $table = '<table class="donator-list"><tbody>';
+        $table.= '<tr>';
+        $table.= '<th>No</th>';
+        $table.= '<th>Date</th>';
+        $table.= '<th>Receipt No'.'.'.'</th>';
+        $table.= '<th>Name</th>';
+        $table.= '<th>Amount(RM)</th>';
+        $table.= '<th>References</th>';
+        $table.= '</tr>';
+        $table.= do_shortcode($content);
+        $table.='</tbody></table>';
+
+        return $table;
+    }
+
+    return "";
+}
+add_shortcode('fnk_donator_list_table', 'fnk_donator_list_table_shortcode');
+
+/*
+*
+* Create donator list table - row part
+* [fnk_donator_list date="9-Jan" receipt="CASH" name="何亚财" amount="1000.00" ref="MONTHLY(1'2014)"]
+*
+*/
+function fnk_donator_list_shortcode($atts, $content){
+    $atts = shortcode_atts(
+        array(
+            'date' => "-",
+            'receipt' => "-",
+            'name' => "-",
+            'amount' => "-",
+            'ref' => "-",
+            'content' => !empty($content) ? $content : NULL
+        ), $atts
+    );
+
+    extract($atts);
+
+    $row = '<tr>';
+    $row.= '<td class="donator-list-counter"></td>';
+    $row.= '<td>'.$date.'</td>';
+    $row.= '<td>'.$receipt.'</td>';
+    $row.= '<td>'.$name.'</td>';
+    $row.= '<td>'.$amount.'</td>';
+    $row.= '<td>'.$ref.'</td>';
+    $row.= '</tr>';
+
+    return $row;
+}
+add_shortcode('fnk_donator_list', 'fnk_donator_list_shortcode');
+
+/*
+*
 * Content column to the left
 * [fnk_left_box_image] content [/fnk_left_box_image]
 *
@@ -427,6 +501,8 @@ function fnk_shortcode_empty_paragraph_fix($content) /* Fixes shortcode using wp
         'fnk_title',
         'fnk_donation_table',
         'fnk_donation_row',
+        'fnk_donator_list_table',
+        'fnk_donator_list',
         'fnk_left_box_image',
         'fnk_right_box_image',
         'fnk_left_box_text',

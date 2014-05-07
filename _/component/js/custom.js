@@ -36,6 +36,13 @@ cs(document).ready(function(){
         });
     }
 
+    if( cs("td.donator-list-counter").length > 0 )
+    {
+        cs("td.donator-list-counter").each(function(i,elem){
+            cs(this).text(i+1);
+        });
+    }
+
     cs(window).load(function(){
         if(cs(".event-thumbnail").length > 0){
             cs(".event-thumbnail").carouFredSel({
