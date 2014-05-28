@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 
 class fnk_sidebar_menu extends WP_Widget {
 
