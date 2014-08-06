@@ -307,6 +307,39 @@ add_shortcode('fnk_post_image', 'fnk_post_image_shortcode');
 
 /*
 *
+* A shortcode for fnk event carousel with caroufredsel wordpress plugin combined
+* [fnk_slider_easy date="" title=""]
+* [caroufredsel id="1488"]
+* [/fnk_slider_easy]
+*
+*/
+function fnk_slider_shortcode_combine($atts, $content){
+    $atts = shortcode_atts(
+        array(
+            'date' => '',
+            'title' => '',
+            'content' => !empty($content) ? $content : NULL
+        ), $atts
+    );
+
+    extract($atts);
+
+    if(!empty($content)){
+
+    $slider = '<div class="fnk-photo-gallery">';
+    $slider.= '<h4 style="color:#606060; font-weight:900;">'.$date.' - '.$title.'</h4>';
+    $slider.= do_shortcode($content);
+    $slider.= '</div>';
+
+    return $slider;
+    }
+
+    return "";
+}
+add_shortcode('fnk_slider_easy', 'fnk_slider_shortcode_combine');
+
+/*
+*
 * A shortcode for fnk event carousel - the slider tag
 * [fnk_slider date="" title=""]
 * [fnk_img id="2231" title="Event 2014" group="event2014"]

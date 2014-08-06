@@ -58,6 +58,11 @@ function fnk_theme_setup_init()
     require_once("includes/taxonomy-metabox/functions.php");
     require_once("includes/options/theme-option.php");
 
+    global $WordPress_carouFredSel;
+    $WordPress_carouFredSel->Dev7_carouFredSel_RCD;
+
+    remove_filter( $WordPress_carouFredSel->Dev7_carouFredSel_RCD->post_type . '_shortcode_output', array( $WordPress_carouFredSel->Dev7_carouFredSel_RCD, 'shortcode_output' ), 10, 5 );
+    add_filter( $WordPress_carouFredSel->Dev7_carouFredSel_RCD->post_type . '_shortcode_output', 'caroufredsel_shortcode_new_output', 10, 5 );
 }
 add_action( 'after_setup_theme', 'fnk_theme_setup_init' );
 
@@ -255,4 +260,400 @@ function add_fnk_loop_category(){
 
 function fnk_excerpt_length($len) {
     return 25;
+}
+
+function caroufredsel_shortcode_new_output( $id, $output, $options, $attachments, $slider_type ) {
+    $js_output     = '';
+    $css_output    = '';
+    $pagination    = '';
+    $show_captions = false;
+
+    // Checking for RCD setting
+    $RCD_custom_layout = false;
+    $custom_layout_pos = strpos($options['custom_css'], '.force-custom-setting');
+    if( $custom_layout_pos !== false )
+    {
+        $RCD_custom_layout = true;
+    }
+
+    if ( $options['settings_mode'] == 'layout' ) {
+        $layout            = $options['carousel_layout'];
+        $layout_pagination = '';
+        $layout_prev_next  = '';
+        $layouts           = $this->get_layouts();
+        $js_file           = $layouts[$layout]['layout_dir'] . '/' . $layout . '.js';
+        $js_output         = file_get_contents( $js_file );
+        // Nav and Pag
+        $pagination = $layouts[$layout]['layout_details']['SupportsPagination'];
+        $prev_next  = $layouts[$layout]['layout_details']['SupportsPrevNext'];
+        $captions   = $layouts[$layout]['layout_details']['SupportsCaptions'];
+        if ( $captions == 'true' ) {
+            $show_captions = true;
+        }
+
+        $js_output = str_replace( '$(".dev7-carousel").', '$("#caroufredsel-' . $id . '").', $js_output );
+        $js_output = str_replace( '$(\'.dev7-carousel\').', '$("#caroufredsel-' . $id . '").', $js_output );
+
+        $js_output = str_replace( '.dev7-caroufredsel-', '#dev7-caroufredsel-wrapper-' . $id . ' .dev7-caroufredsel-', $js_output );
+
+        if ( $layouts[$layout]['layout_css'] ) {
+            $css_file   = $layouts[$layout]['layout_dir'] . '/' . $layout . '.css';
+            $css_output = file_get_contents( $css_file );
+        }
+        if ( $options['custom_layout'] == 'on' ) {
+            // Custom Nav and Pag
+            if ( $options['nav'] == 'off' ) {
+                $prev_next = 'false';
+            }
+            if ( $options['pagination'] == 'on' ) {
+                $pagination = ( $options['pag_thumb'] == 'on' ) ? 'thumbs' : 'true';
+            } else {
+                $pagination = 'false';
+            }
+        }
+    }
+    if ( $options['settings_mode'] == 'advanced' || ( $options['custom_layout'] == 'on' && $options['settings_mode'] == 'layout' ) ) {
+        // All advanced settings also used for customising layouts
+
+        // Nav and Pag
+        $pagination = 'false';
+        if ( $options['pagination'] == 'on' ) {
+            $pagination = ( $options['pag_thumb'] == 'on' ) ? 'thumbs' : 'true';
+        }
+        $prev_next = ( $options['nav'] == 'on' ) ? 'true' : 'false';
+
+
+        $custom_js_output = '';
+        if ( isset( $options['circular'] ) ) {
+            $custom_js_output .= '          circular:   ' . ( ( $options['circular'] == 'on' ) ? 'true' : 'false' ) . ',' . "\n";
+        }
+        if ( isset( $options['infinite'] ) ) {
+            $custom_js_output .= '          infinite:   ' . ( ( $options['infinite'] == 'on' ) ? 'true' : 'false' ) . ',' . "\n";
+        }
+        if ( isset( $options['responsive'] ) ) {
+            $custom_js_output .= '      responsive: ' . ( ( $options['responsive'] == 'on' ) ? 'true' : 'false' ) . ',' . "\n";
+        }
+        if ( isset( $options['direction'] ) ) {
+            $custom_js_output .= '      direction:  "' . $options['direction'] . '",' . "\n";
+        }
+        if ( isset( $options['align'] ) ) {
+            $custom_js_output .= '          align:  "' . $options['align'] . '",' . "\n";
+        }
+        $width = 'null';
+        if ( $options['width'] != '' ) {
+            $width = $options['width'];
+            if ( ! is_numeric( $width ) ) {
+                $width = '"' . $width . '"';
+            }
+        }
+        if ( isset( $options['width'] ) ) {
+            $custom_js_output .= '          width:  ' . $width . ',' . "\n";
+        }
+        $height = 'null';
+        if ( $options['height'] != '' ) {
+            $height = $options['height'];
+            if ( ! is_numeric( $height ) ) {
+                $height = '"' . $height . '"';
+            }
+        }
+        if ( isset( $options['height'] ) ) {
+            $custom_js_output .= '          height: ' . $height . ',' . "\n";
+        }
+        $custom_js_output .= '                                      items: {' . "\n";
+        if ( isset( $options['visible'] ) ) {
+            $custom_js_output .= '          visible:    ' . ( ( $options['visible'] != '' ) ? $options['visible'] : 'null' ) . ',' . "\n";
+        }
+        if ( isset( $options['start_image'] ) ) {
+            $custom_js_output .= '      start:      ' . ( ( $options['start_image'] != '' ) ? $options['start_image'] : '0' ) . ',' . "\n";
+        }
+        $custom_js_output .= '                                      },' . "\n";
+        $custom_js_output .= '                                      scroll: {' . "\n";
+        if ( isset( $options['images_scroll'] ) ) {
+            $custom_js_output .= '  items:      ' . ( ( $options['images_scroll'] != '' ) ? $options['images_scroll'] : 'null' ) . ',' . "\n";
+        }
+        if ( isset( $options['scroll_effect'] ) ) {
+            $custom_js_output .= '  fx:         "' . $options['scroll_effect'] . '",' . "\n";
+        }
+        if ( isset( $options['scroll_easing'] ) ) {
+            $custom_js_output .= '  easing:     "' . $options['scroll_easing'] . '",' . "\n";
+        }
+        if ( isset( $options['scroll_duration'] ) ) {
+            $custom_js_output .= '  duration:       ' . ( ( $options['scroll_duration'] != '' ) ? $options['scroll_duration'] : '500' ) . ',' . "\n";
+        }
+        if ( isset( $options['hover'] ) ) {
+            $custom_js_output .= '          pauseOnHover:   ' . ( ( $options['hover'] == 'on' ) ? 'true' : 'false' ) . ',' . "\n";
+        }
+        $custom_js_output .= '                                      },' . "\n";
+        $custom_js_output .= '                                      auto: {' . "\n";
+        if ( isset( $options['autoplay'] ) ) {
+            $custom_js_output .= '  play:   ' . ( ( $options['autoplay'] == 'on' ) ? 'true' : 'false' ) . ',' . "\n";
+        }
+        if ( isset( $options['timeout_duration'] ) && $options['timeout_duration'] != '' ) {
+            $custom_js_output .= '  timeoutDuration:    ' . $options['timeout_duration'] . ',' . "\n";
+        }
+        $custom_js_output .= '                                      },' . "\n";
+        $custom_js_output .= '                                      prev: {' . "\n";
+        if ( isset( $options['nav'] ) ) {
+            $custom_js_output .= '              button:     ' . ( ( $options['nav'] == 'on' ) ? '"#dev7-caroufredsel-wrapper-' . $id . ' .dev7-caroufredsel-prev"' : 'null' ) . ',' . "\n";
+        }
+        if ( isset( $options['key_nav'] ) ) {
+            $custom_js_output .= '          key:            ' . ( ( $options['key_nav'] == 'on' ) ? '"left"' : 'null' ) . ',' . "\n";
+        }
+        $custom_js_output .= '                                      },' . "\n";
+        $custom_js_output .= '                                      next: {' . "\n";
+        if ( isset( $options['nav'] ) ) {
+            $custom_js_output .= '              button:     ' . ( ( $options['nav'] == 'on' ) ? '"#dev7-caroufredsel-wrapper-' . $id . ' .dev7-caroufredsel-next"' : 'null' ) . ',' . "\n";
+        }
+        if ( isset( $options['key_nav'] ) ) {
+            $custom_js_output .= '          key:            ' . ( ( $options['key_nav'] == 'on' ) ? '"right"' : 'null' ) . ',' . "\n";
+        }
+        $custom_js_output .= '                                      },' . "\n";
+        if ( isset( $options['pagination'] ) ) {
+            $custom_js_output .= '  pagination: { container:    ' . ( ( $options['pagination'] == 'on' ) ? '"#dev7-caroufredsel-wrapper-' . $id . ' .dev7-caroufredsel-pag"' : 'null' ) . ', anchorBuilder   : ' . ( ( isset( $options['pag_thumb'] ) && $options['pag_thumb'] == 'on' ) ? 'false' : 'null' ) . ', },' . "\n";
+        }
+        if ( isset( $options['swipe_nav'] ) ) {
+            $custom_js_output .= '  swipe: { onTouch:   ' . ( ( $options['swipe_nav'] == 'on' ) ? 'true' : 'false' ) . ' },' . "\n";
+        }
+
+        // All advanced settings used for customising layouts
+        if ( $options['settings_mode'] == 'layout' ) {
+            $js_output = str_replace( '//customisations', ', '. $custom_js_output, $js_output );
+        } else {
+            $js_output .= $custom_js_output;
+        }
+
+
+    }
+
+    // Captions
+    if ( ( isset( $options['enable_captions'] ) && $options['enable_captions'] == 'on' ) && $options['settings_mode'] != 'layout' || ( $options['custom_layout'] == 'on' && $options['settings_mode'] == 'layout' ) ) {
+        $show_captions = true;
+    }
+
+    // RCD interested in this mode
+    if ( $options['settings_mode'] == 'super' ) {
+        $js_output = $options['raw_jquery'];
+        if ( strpos( $js_output, '.dev7-caroufredsel-pag' ) !== false ) {
+            $pagination = ( $options['pag_thumb'] == 'on' ) ? 'thumbs' : 'true';
+        }
+        if ( strpos( $js_output, '.dev7-caroufredsel-thumb' ) !== false ) {
+            $pagination = ( $options['pag_thumb'] == 'on' ) ? 'thumbs' : 'false';
+        }
+        if($RCD_custom_layout){
+            // Custom Nav and Pag
+            $prev_next = 'true'; // RCD: show prev & next link. Don't care if the [nav] setting is off
+        }
+    }
+
+    do_action( 'caroufredsel_before_caroufredsel' );
+
+    // RCD
+    if($RCD_custom_layout)
+    {
+        // Next / Previous Buttons
+        if ( isset( $prev_next ) && $prev_next == 'true' ) {
+            $output.= '<div class="navi-prev-next">';
+            $output.= '<a class="prev" href="#"></a>';
+            $output.= '<a class="next" href="#"></a>';
+            $output.= '</div>';
+        }
+
+        $image_link = dev7_default_val( $options, 'image_link', 'on' );
+        $output .= '<div id="dev7-caroufredsel-wrapper-' . $id . '" class="dev7-caroufredsel-wrapper' . ( ( $options['enable_lightbox'] == 'on' && $image_link == 'off' ) ? ' enable-lightbox' : '' ) . '">';
+        $output .= '<ul id="caroufredsel-' . $id . '">';
+
+        $a_rel   = 'caroufredsel-' . $id;
+
+        foreach ( $attachments as $attachment ) {
+            $image_thumb = $attachment['image_src'];
+            $rcd_img_large = wp_get_attachment_image_src($attachment['attachment_id'], "event-gallery-photo"); //RCD
+//
+//            <li style="margin-right: 5px;">
+//                <a href="http://localhost/sites2/fnk/db/wp-content/themes/fnk-wp-theme/images/fnk-logo-no-photo-800-600.jpg" title="KLIGP 2012" rel="lightbox-event2014">
+//                    <img alt="KLIGP 2012" src="http://localhost/sites2/fnk/db/wp-content/themes/fnk-wp-theme/images/no-photo-68.jpg" width="68" height="49">
+//                </a>
+//            </li>
+
+            $alt     = ( isset( $attachment['alt_text'] ) ) ? __( $attachment['alt_text'] ) : false;
+            $link    = ( isset( $attachment['post_permalink'] ) ) ? __( $attachment['post_permalink'] ) : false;
+            $caption = ( isset( $attachment['post_title'] ) ) ? __( $attachment['post_title'] ) : false;
+
+            $image = '<img ' . 'src="' . $image_thumb . '" width="68"' . 'height="49"';
+            if ( $alt != '' ) {
+                $image .= ' alt="' . $alt . '"';
+            }
+            $image .= ' />';
+
+            $output .= '<li>';
+            $output .= '<a '.'title="' . $caption . '"'.' href="'. $rcd_img_large[0] .'" rel="lightbox-'. $a_rel .'">';
+            $output .=  $image;
+            $output .= '</a>';
+            $output .= '</li>';
+
+        }
+        $output .= '</ul>';
+        $output .= '<div class="dev7-clearfix"></div>';
+
+    }
+    else
+    {
+        $image_link = dev7_default_val( $options, 'image_link', 'on' );
+        $output .= '<div id="dev7-caroufredsel-wrapper-' . $id . '" class="dev7-caroufredsel-wrapper' . ( ( $options['enable_lightbox'] == 'on' && $image_link == 'off' ) ? ' enable-lightbox' : '' ) . '">';
+        $output .= '<div id="caroufredsel-' . $id . '" class="dev7-caroufredsel-carousel">';
+
+        $a_class = '';
+        $a_rel   = 'caroufredsel-' . $id;
+
+        $lb_options = get_option( 'caroufredsel_settings' );
+        if ( ! isset( $lb_options['lightbox-config'] ) ) {
+            $lb_options['lightbox-config'] = 'default';
+        }
+        if ( $lb_options['lightbox-config'] != 'default' ) {
+            $a_class = $lb_options['custom-class'];
+            $a_rel   = $lb_options['custom-rel'];
+        }
+
+        foreach ( $attachments as $attachment ) {
+            $image_full = $attachment['image_src'];
+
+            $alt     = ( isset( $attachment['alt_text'] ) ) ? __( $attachment['alt_text'] ) : false;
+            $link    = ( isset( $attachment['post_permalink'] ) ) ? __( $attachment['post_permalink'] ) : false;
+            $caption = ( isset( $attachment['post_title'] ) ) ? __( $attachment['post_title'] ) : false;
+
+            if ( $show_captions ) {
+                $output .= '<div class="dev7-caroufredsel-image">';
+            }
+
+            $lightbox          = '';
+            $lightbox_captions = '';
+            if ( isset( $options['enable_lightbox'] ) && $options['enable_lightbox'] == 'on' && $image_link == 'off' ) {
+                $lightbox          = ' data-img="' . $image_full . '" rel="' . $a_rel . '" ';
+                $lightbox_title    = ( $caption ) ? $caption : '';
+                $lightbox_link     = ( $link ) ? $link : '';
+                $lightbox_captions = ' title="' . $lightbox_title . '" data-link="' . $lightbox_link . '" ';
+            }
+
+            $image = '<img ' . $lightbox . $lightbox_captions . 'src="' . $image_full . '"';
+            if ( $alt != '' ) {
+                $image .= ' alt="' . $alt . '"';
+            }
+            $image .= ' />';
+
+            if ( $image_link == 'on' && $link ) {
+                $target_blank = dev7_default_val( $options, 'target_blank', 'on' );
+                $target = ( $target_blank == 'on' ) ? ' target="_blank"' : '';
+                $output .= '<a '. $target .' href="'. $link .'">';
+                $output .=  $image;
+                $output .= '</a>';
+            } else {
+                $output .= $image;
+            }
+
+            if ( ( $link || $caption ) && $show_captions ) {
+                $output .= '<p class="dev7-carousel-caption">';
+                $output .= ( $caption ) ? $caption : '';
+                $output .= ( $link ) ? ' <a href="' . $link . '">' . $link . '</a>' : '';
+                $output .= '</p>';
+            }
+            if ( $show_captions ) {
+                $output .= '</div>';
+            }
+        }
+        $output .= '</div>';
+        $output .= '<div class="dev7-clearfix"></div>';
+
+        if ( isset( $options['enable_lightbox'] ) && $options['enable_lightbox'] == 'on' && $image_link == 'off' ) {
+            $output .= '<script type="text/javascript">                                     ' . "\n";
+            $output .= '    jQuery(document).ready(function($) {                            ' . "\n";
+            $output .= '            $(".dev7-caroufredsel-carousel img").colorbox({         ' . "\n";
+            $output .= '                href: function() {                                  ' . "\n";
+            $output .= '                    var url = $(this).attr("data-img");             ' . "\n";
+            $output .= '                    return url;                                     ' . "\n";
+            $output .= '                },                                                  ' . "\n";
+            $output .= '                rel: "' . $a_rel . '",                              ' . "\n";
+            $output .= '                title: function() {                                 ' . "\n";
+            $output .= '                    var url = $(this).attr("data-link");            ' . "\n";
+            $output .= '                    var title = $(this).attr("title");              ' . "\n";
+            $output .= '                    return \'<a href="\' + url + \'" target="_blank">\' + title +\'</a>\';  ' . "\n";
+            $output .= '                },                                                  ' . "\n";
+            $output .= '            });                                                     ' . "\n";
+            $output .= '    });                                                             ' . "\n";
+            $output .= '</script>                                                           ' . "\n";
+        }
+
+        // Next / Previous Buttons
+        if ( isset( $prev_next ) && $prev_next == 'true' ) {
+            $output .= '<a class="dev7-caroufredsel-prev" href="#"><span>prev</span></a>';
+            $output .= '<a class="dev7-caroufredsel-next" href="#"><span>next</span></a>';
+        }
+    }
+
+    // Pagination
+    if ( $pagination ) {
+        if($RCD_custom_layout)
+        {
+            // no pagination for the custom carousel
+        }
+        else{
+            $output .= '<div class="dev7-caroufredsel-pag">';
+            if ( $pagination == 'thumbs' ) {
+                foreach ( $attachments as $attachment ) {
+                    $image      = $attachment['thumbnail'];
+                    $image_full = $attachment['image_src'];
+                    $thumb_src  = $thumb_src = 'src="' . $attachment['thumbnail'] . '"';
+
+                    if ( isset( $options['dim_x'] ) && isset( $options['dim_y'] ) && $options['dim_x'] && $options['dim_y'] ) {
+                        if ( isset( $attachment['type'] ) && $attachment['type'] == 'wp' ) {
+                            $resized_image =  Dev7_Core_Images::resize_image( $attachment['attachment_id'], '', $options['dim_x'], $options['dim_y'], true );
+                            if ( is_wp_error( $resized_image ) ) {
+                                $output .= '<p>Error: ' . $resized_image->get_error_message() . '</p>';
+                            } else {
+                                $thumb_src = 'src="' . $resized_image['url'] . '" ';
+                            }
+                        } else {
+                            $thumb_src = 'src="' . $attachment['thumbnail'] . '" width="' . $options['dim_x'] . '" height="' . $options['dim_y'] . '" ';
+                        }
+                    }
+                    $output .= '<a class="dev7-caroufredsel-thumb" href="#"><img ' . $thumb_src . '';
+                    $output .= ' /></a>';
+                }
+            }
+            $output .= '</div>';
+        }
+    }
+
+    $output .= '</div>';
+    do_action( 'caroufredsel_after_caroufredsel' );
+
+    $output .= '<script type="text/javascript">                         ' . "\n";
+    $output .= '    jQuery(document).ready(function($) {                ' . "\n";
+    $output .= '        function runCarousel() {                        ' . "\n";
+    if ( $options['settings_mode'] != 'layout' ) {
+        $output .= '        $("#caroufredsel-' . $id . '").carouFredSel({   ' . "\n";
+    }
+    $output .= '        ' . $js_output . "\n";
+    if ( $options['settings_mode'] != 'layout' ) {
+        $output .= '        });     ' . "\n";
+    }
+    $output .= '        }                                               ' . "\n";
+    $output .= '        $("#caroufredsel-' . $id . '").imagesLoaded(runCarousel);       ' . "\n";
+    $output .= '    });                                                 ' . "\n";
+    $output .= '</script>                                               ' . "\n";
+
+    if ( isset( $options['nav'] ) ) {
+        $js_output .= '             button:     ' . ( ( $options['nav'] == 'on' ) ? '".dev7-caroufredsel-next"' : 'null' ) . ',' . "\n";
+    }
+    if ( trim( $css_output ) . trim( $options['custom_css'] ) != '' || ( isset( $options['enable_lightbox'] ) && $options['enable_lightbox'] == 'on' ) ) {
+        $output .= '<style type="text/css" media="screen">                  ' . "\n";
+        $output .= $css_output . "\n";
+        $output .= $options['custom_css'] . "\n";
+        if ( isset( $options['enable_lightbox'] ) && $options['enable_lightbox'] == 'on' && $image_link == 'off' ) {
+            $output .= '.dev7-caroufredsel-carousel img {' . "\n";
+            $output .= '    cursor: pointer;' . "\n";
+            $output .= '}' . "\n";
+        }
+        $output .= '</style>                                                ' . "\n";
+    }
+
+    return $output;
 }
