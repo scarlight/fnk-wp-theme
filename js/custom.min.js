@@ -50,7 +50,7 @@ cs(document).ready(function(){
                 infinite    : true,
                 responsive  : false,
                 direction   : "left",
-                width       : 690,
+                width       : "100%",
                 height      : 51,
                 align       : "center",
                 padding     : 0,

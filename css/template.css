@@ -668,7 +668,6 @@ div.latest-cause img {
   margin: 0;
   padding: 0;
   border: 0;
-  overflow: hidden;
 }
 .fnk-photo-gallery .navi-prev-next {
   position: absolute;
@@ -693,7 +692,7 @@ div.latest-cause img {
   top: 0px;
 }
 .fnk-photo-gallery .navi-prev-next a.prev {
-  left: 0px;
+  left: -24px;
 }
 .fnk-photo-gallery .navi-prev-next a.prev:before {
   font-family: Glyphicons Halflings;
@@ -705,7 +704,7 @@ div.latest-cause img {
   color: #4FC0AA;
 }
 .fnk-photo-gallery .navi-prev-next a.next {
-  right: 0px;
+  right: -24px;
 }
 .fnk-photo-gallery .navi-prev-next a.next:before {
   font-family: Glyphicons Halflings;

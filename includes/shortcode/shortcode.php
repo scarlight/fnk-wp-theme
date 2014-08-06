@@ -542,6 +542,7 @@ function fnk_shortcode_empty_paragraph_fix($content) /* Fixes shortcode using wp
         'fnk_right_box_text',
         'fnk_post_image',
         'fnk_slider',
+        'fnk_slider_easy',
         'fnk_img',
         'fnk_list_info',
         'fnk_list_info_detail'
